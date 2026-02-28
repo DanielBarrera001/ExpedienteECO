@@ -65,6 +65,3 @@ A continuación se presentan capturas de pantalla de la aplicación para referen
 * **Generación de Documentos:** QuestPDF / DinkToPdf
 
 ---
-
-## Pequeña Descripción (Para el About de GitHub)
-> Sistema integral de gestión de salud escolar para la Escuela Cristiana Oasis. Optimiza el control de expedientes clínicos, consultas diarias e inventario de farmacia con un enfoque moderno y profesional en .NET 8.
