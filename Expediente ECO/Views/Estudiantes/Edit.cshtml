@@ -1,0 +1,153 @@
+﻿@model ExpedienteECO.Entidades.Estudiante
+
+<div class="dashboard-container">
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold m-0" style="color: var(--color-primario);">Actualizar Expediente</h2>
+        <span class="badge bg-soft-primario text-primary px-3 py-2 rounded-pill mt-2 border border-opacity-10">
+            <i class="bi bi-pencil-fill me-1"></i> Editando a: <span class="fw-bold">@Model.NombreCompleto</span>
+        </span>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 p-4 mx-auto mb-5" style="max-width: 900px; border-top: 5px solid var(--color-primario) !important;">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="FotoPath" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3 shadow-sm mb-3 small"></div>
+
+            <div class="row g-3">
+                @* Sección 1: Datos Personales *@
+                <h5 class="fw-bold border-bottom pb-2 mt-2 text-dark d-flex align-items-center">
+                    <span class="badge bg-soft-primario text-primary me-2 rounded-circle" style="font-size: 0.8rem;">1</span>
+                    Datos del Estudiante
+                </h5>
+
+                <div class="col-md-6">
+                    <label asp-for="NombreCompleto" class="form-label-custom">Nombre Completo</label>
+                    <input asp-for="NombreCompleto" class="form-control bg-light border-2 rounded-3 shadow-none focus-blue" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Grado" class="form-label-custom">Grado Escolar</label>
+                    <select asp-for="Grado" class="form-select bg-light border-2 rounded-3 shadow-none focus-blue" asp-items="ViewBag.Grados" required>
+                        <option value="">-- Seleccione el Grado --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Seccion" class="form-label-custom">Sección</label>
+                    <select asp-for="Seccion" class="form-select bg-light border-2 rounded-3 shadow-none focus-blue" required>
+                        <option value="A">Sección A</option>
+                        <option value="B">Sección B</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="FechaNacimiento" class="form-label-custom">Fecha de Nacimiento</label>
+                    <input asp-for="FechaNacimiento" type="date" class="form-control bg-light border-2 rounded-3 shadow-none focus-blue" required />
+                </div>
+
+                @* Sección 2: Responsable *@
+                <h5 class="fw-bold border-bottom pb-2 mt-4 text-dark d-flex align-items-center">
+                    <span class="badge bg-soft-primario text-primary me-2 rounded-circle" style="font-size: 0.8rem;">2</span>
+                    Datos del Responsable
+                </h5>
+
+                <div class="col-md-6">
+                    <label asp-for="NombrePadre" class="form-label-custom">Nombre del Responsable</label>
+                    <input asp-for="NombrePadre" class="form-control bg-light border-2 rounded-3 shadow-none focus-blue" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="TelefonoResponsable" class="form-label-custom">WhatsApp / Teléfono</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-2 border-end-0 text-success"><i class="bi bi-whatsapp"></i></span>
+                        <input asp-for="TelefonoResponsable" class="form-control bg-light border-2 rounded-end-3 shadow-none focus-blue" required />
+                    </div>
+                </div>
+
+                @* Sección 3: Médica *@
+                <h5 class="fw-bold border-bottom pb-2 mt-4 text-dark d-flex align-items-center">
+                    <span class="badge bg-soft-primario text-primary me-2 rounded-circle" style="font-size: 0.8rem;">3</span>
+                    Información Médica
+                </h5>
+
+                <div class="col-12">
+                    <div class="cronico-container transition-all @(Model.TienePadecimiento ? "cronico-active" : "")" id="containerCronico">
+                        <div class="form-check form-switch mb-0">
+                            <input class="form-check-input" type="checkbox" role="switch" asp-for="TienePadecimiento" id="editSwitchCronico">
+                            <label class="form-check-label fw-bold text-dark" for="editSwitchCronico">¿Posee padecimientos crónicos?</label>
+                        </div>
+
+                        <div id="editSeccionPadecimientos" class="mt-3" style="display: @(Model.TienePadecimiento ? "block" : "none")">
+                            <label asp-for="PadecimientosCronicos" class="form-label-custom">Padecimiento Seleccionado</label>
+                            <select asp-for="PadecimientosCronicos" class="form-select bg-white border-2 shadow-sm" id="editSelectPadecimiento">
+                                <option value="Ninguno">Ninguno</option>
+                                <option value="Asma">Asma</option>
+                                <option value="Diabetes">Diabetes</option>
+                                <option value="Hipertensión">Hipertensión</option>
+                                <option value="Alergia Grave">Alergia Grave</option>
+                                <option value="Epilepsia">Epilepsia</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Alergias" class="form-label-custom">Alergias</label>
+                    <textarea asp-for="Alergias" class="form-control bg-light border-2 rounded-3 focus-blue" rows="2" required></textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="MedicacionPermanente" class="form-label-custom">Medicación Permanente</label>
+                    <textarea asp-for="MedicacionPermanente" class="form-control bg-light border-2 rounded-3 focus-blue" rows="2" required></textarea>
+                </div>
+
+                <h5 class="fw-bold border-bottom pb-2 mt-4 text-dark d-flex align-items-center">
+                    <span class="badge bg-soft-primario text-primary me-2 rounded-circle" style="font-size: 0.8rem;">4</span>
+                    Observaciones Especiales
+                </h5>
+
+                <div class="col-12">
+                    <label asp-for="NotasEspeciales" class="form-label-custom">Notas y Recomendaciones Adicionales</label>
+                    <textarea asp-for="NotasEspeciales" class="form-control bg-light border-2 focus-blue" rows="4"
+                              placeholder="Ej: Usa lentes de contacto, tiene marcapasos, etc."></textarea>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-3 text-center border-top">
+                <button type="submit" class="btn btn-success rounded-pill px-5 py-2 shadow-sm fw-bold">
+                    <i class="bi bi-check-circle me-1"></i> Guardar Cambios
+                </button>
+                <div class="mt-3">
+                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-link text-muted text-decoration-none small">
+                        <i class="bi bi-arrow-left-short me-1"></i> Volver al expediente sin guardar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('editSwitchCronico').addEventListener('change', function() {
+            const seccion = document.getElementById('editSeccionPadecimientos');
+            const contenedor = document.getElementById('containerCronico');
+
+            if(this.checked) {
+                seccion.style.display = 'block';
+                contenedor.classList.add('cronico-active');
+            } else {
+                seccion.style.display = 'none';
+                contenedor.classList.remove('cronico-active');
+                document.getElementById('editSelectPadecimiento').value = "Ninguno";
+            }
+        });
+    </script>
+}

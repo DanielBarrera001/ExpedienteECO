@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ExpedienteECO.Entidades.Estudiante>
+
+<div class="list-group list-group-flush dashboard-container">
+    @foreach (var item in Model)
+    {
+        <div class="list-group-item d-flex justify-content-between align-items-center py-3 border-bottom bg-transparent transition-all">
+            <div class="d-flex align-items-center">
+                <div class="me-3 position-relative">
+                    <img src="@(string.IsNullOrEmpty(item.FotoPath) ? "/img/default-user.png" : item.FotoPath)"
+                         class="avatar-sm shadow-sm"
+                         style="width: 55px; height: 55px;"
+                         onerror="this.src='/img/default-user.png';">
+
+                    @* Indicador usando el color secundario (Rojo) del CSS *@
+                    <span class="position-absolute bottom-0 end-0 badge rounded-circle p-1 border border-2 border-white bg-soft-secundario"
+                          style="background-color: var(--color-secundario) !important;">
+                        <i class="bi bi-exclamation-triangle-fill text-white" style="font-size: 0.5rem;"></i>
+                    </span>
+                </div>
+
+                <div>
+                    <h6 class="mb-0 fw-bold text-dark">@item.NombreCompleto</h6>
+                    <p class="text-muted small mb-1">@item.Grado "@item.Seccion"</p>
+
+                    @* Badge usando bg-soft-warning de tu CSS *@
+                    <span class="badge rounded-pill bg-soft-warning px-3 py-2 d-inline-block shadow-xs border border-warning border-opacity-10" style="font-size: 0.75rem;">
+                        <i class="bi bi-heart-pulse-fill me-1"></i>
+                        <span class="fw-medium">@item.PadecimientosCronicos</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="ms-2">
+                @* Botón usando la clase btn-escuela-blue de tu CSS *@
+                <a asp-controller="Estudiantes" asp-action="Details" asp-route-id="@item.Id"
+                   class="btn btn-sm btn-escuela-blue px-3 shadow-sm">
+                    Expediente <i class="bi bi-chevron-right ms-1 small"></i>
+                </a>
+            </div>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            @* Estado vacío usando bg-soft-primario de tu CSS *@
+            <div class="bg-soft-primario rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-shield-check display-6"></i>
+            </div>
+            <h6 class="fw-bold text-primary" style="color: var(--color-primario) !important;">Todo en orden</h6>
+            <p class="text-muted small">No hay pacientes con padecimientos registrados en esta sección.</p>
+        </div>
+    }
+</div>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Expediente ECO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3286e887c497af5fcd6df0bbe395a307caf52d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Expediente ECO")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Expediente ECO")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

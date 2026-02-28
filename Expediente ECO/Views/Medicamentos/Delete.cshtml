@@ -1,0 +1,53 @@
+﻿@model ExpedienteECO.Entidades.Medicamento
+
+<div class="dashboard-container py-5 container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+                @* Encabezado de Advertencia *@
+                <div class="card-header-delete p-4 text-center">
+                    <div class="icon-circle-danger d-inline-block p-3 rounded-circle mb-3">
+                        <i class="bi bi-exclamation-octagon text-danger fs-1"></i>
+                    </div>
+                    <h3 class="fw-bold text-danger mb-0">¿Confirmar Eliminación?</h3>
+                </div>
+
+                <div class="card-body p-4 p-md-5 text-center">
+                    <p class="text-muted mb-4">
+                        Está a punto de eliminar permanentemente el insumo: <br>
+                        <span class="fs-4 fw-bold text-dark">@Model.Nombre</span>
+                    </p>
+
+                    @* Alerta de Integridad *@
+                    <div class="alert bg-soft-warning border-0 rounded-4 p-3 mb-4 text-start">
+                        <div class="d-flex">
+                            <i class="bi bi-info-circle-fill text-warning me-3 fs-4"></i>
+                            <div class="small text-warning-dark">
+                                <strong>Nota de Integridad:</strong> Si este medicamento ya tiene registros en el historial de consultas, el sistema impedirá su eliminación para proteger los datos médicos.
+                            </div>
+                        </div>
+                    </div>
+
+                    <form asp-action="Delete">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="bi bi-trash3-fill me-2"></i> Sí, eliminar registro
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-2 border fw-medium text-muted">
+                                <i class="bi bi-x-circle me-1"></i> Cancelar y volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer bg-light border-0 py-3 text-center">
+                    <small class="text-muted">Insumo ID: #@Model.Id | Stock Actual: @Model.StockActual</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

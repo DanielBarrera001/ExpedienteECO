@@ -1,0 +1,208 @@
+﻿@model IEnumerable<ExpedienteECO.Models.EstudianteViewModel>
+
+<div class="dashboard-container py-4 container-fluid">
+    @* ENCABEZADO *@
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0 text-primary" style="color: var(--color-primario) !important;">Registro de Alumnos</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none" style="color: var(--color-primario);">Estudiantes</a></li>
+                    <li class="breadcrumb-item active">Listado General</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Create" class="btn btn-escuela-blue shadow-sm rounded-pill px-4 fw-bold">
+            <i class="bi bi-person-plus-fill me-1"></i> Nuevo Ingreso
+        </a>
+    </div>
+
+    @* BUSCADOR (ESTILO PÍLDORA) *@
+    <div class="row mb-4">
+        <partial name="_BuscadorPill" view-data='@new ViewDataDictionary(ViewData) {
+                                                  { "IdBuscador", "buscarEstudiante" },
+                                                  { "Placeholder", "Buscar por nombre, grado o padecimiento..." },
+                                                  { "ClaseCol", "col-md-5" }
+                                              }' />
+    </div>
+
+    @* TABLA DE ESTUDIANTES *@
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        @* Línea decorativa superior *@
+        <div style="height: 4px; width: 100%; background-color: var(--color-primario);"></div>
+
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0" id="tablaEstudiantes" style="width:100%">
+                <thead class="bg-light border-bottom">
+                    <tr>
+                        <th class="ps-4 py-3 text-uppercase text-xs fw-bold text-muted">Estudiante</th>
+                        <th class="text-center py-3 text-uppercase text-xs fw-bold text-muted">Grado / Sección</th>
+                        <th class="py-3 text-uppercase text-xs fw-bold text-muted">Padecimientos</th>
+                        <th class="text-center py-3 text-uppercase text-xs fw-bold text-muted">Visitas</th>
+                        <th class="text-end pe-4 py-3 text-uppercase text-xs fw-bold text-muted">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    @if (!string.IsNullOrEmpty(item.FotoPath))
+                                    {
+                                        <img src="@item.FotoPath" class="rounded-circle me-3 shadow-sm border border-2 border-white" style="width: 45px; height: 45px; object-fit: cover;" alt="Foto">
+                                    }
+                                    else
+                                    {
+                                        <div class="avatar-sm me-3 bg-soft-primario text-primary fw-bold d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; border-radius: 12px;">
+                                            @item.NombreCompleto.Substring(0, 1)
+                                        </div>
+                                    }
+                                    <div class="fw-bold text-dark">@item.NombreCompleto</div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge rounded-pill bg-white text-dark border px-3 py-2 shadow-xs">
+                                    @item.Grado - @item.Seccion
+                                </span>
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.PadecimientosCronicos) && item.PadecimientosCronicos != "Ninguno")
+                                {
+                                    <span class="badge bg-soft-danger text-danger px-2 py-1" style="font-size: 0.75rem;">
+                                        <i class="bi bi-heart-pulse-fill me-1"></i> @item.PadecimientosCronicos
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">Sin padecimientos</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <span class="badge rounded-pill bg-soft-primario text-primary fw-bold px-3">@item.TotalVisitas</span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group bg-white shadow-xs rounded-pill border p-1">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Ver Expediente">
+                                        <i class="bi bi-eye-fill text-info"></i>
+                                    </a>
+                                    <button type="button" class="btn btn-white btn-sm border-0 rounded-circle"
+                                            onclick="openFotoModal('@item.Id', '@item.NombreCompleto', '@(item.FotoPath ?? "/img/default-user.png")')"
+                                            title="Actualizar Fotografía">
+                                        <i class="bi bi-camera-fill text-success"></i>
+                                    </button>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Editar Datos">
+                                        <i class="bi bi-pencil-square text-primary"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="p-3"></div>
+    </div>
+</div>
+
+@* MODAL DE FOTO (Igual al anterior) *@
+<div class="modal fade" id="fotoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header border-0 bg-soft-primario p-4">
+                <h5 class="fw-bold m-0 text-primary">Actualizar Fotografía</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formActualizarFoto">
+                <div class="modal-body text-center p-4">
+                    <input type="hidden" name="id" id="modalEstudianteId" />
+                    <p class="text-muted mb-4">Estudiante: <span id="modalNombreTexto" class="fw-bold text-dark"></span></p>
+                    <div class="mb-4 position-relative d-inline-block">
+                        <img id="modalPreview" src="" class="rounded-circle shadow border border-4 border-white" style="width: 160px; height: 160px; object-fit: cover;">
+                        <div class="position-absolute bottom-0 end-0 bg-success text-white rounded-circle p-2 shadow-sm">
+                            <i class="bi bi-camera-fill"></i>
+                        </div>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Seleccionar archivo</label>
+                        <input type="file" name="fotoFile" class="form-control rounded-pill" id="modalInputFile" accept="image/*" onchange="previewModalImage(this)" required>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center pb-4">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" id="btnGuardarFoto" onclick="subirFotoAjax()" class="btn btn-escuela-blue shadow rounded-pill px-4">
+                        <i class="bi bi-cloud-arrow-up me-1"></i> Actualizar Foto
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Librerías DataTables *@
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Inicialización de DataTable igual que Medicamentos
+            var table = $('#tablaEstudiantes').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+                },
+                "responsive": true,
+                "ordering": false,
+                "dom": 'rtip',
+                "pageLength": 50,
+                "order": [[0, "asc"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 } 
+                ]
+            });
+
+            // Conectar el buscador pill
+            $('#buscarEstudiante').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        });
+
+        // Funciones del Modal (Misma lógica AJAX)
+        function openFotoModal(id, nombre, fotoActual) {
+            document.getElementById('modalEstudianteId').value = id;
+            document.getElementById('modalNombreTexto').innerText = nombre;
+            document.getElementById('modalPreview').src = fotoActual;
+            document.getElementById('modalInputFile').value = "";
+            var myModal = new bootstrap.Modal(document.getElementById('fotoModal'));
+            myModal.show();
+        }
+
+        function previewModalImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) { document.getElementById('modalPreview').src = e.target.result; }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function subirFotoAjax() {
+            const btn = document.getElementById("btnGuardarFoto");
+            const formData = new FormData(document.getElementById("formActualizarFoto"));
+            if (!document.getElementById('modalInputFile').value) { alert("Seleccione un archivo."); return; }
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Subiendo...';
+
+            fetch('/Estudiantes/ActualizarFotoModal', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) { location.reload(); }
+                else { alert("Error: " + data.message); btn.disabled = false; btn.innerHTML = 'Actualizar Foto'; }
+            })
+            .catch(error => { console.error('Error:', error); btn.disabled = false; });
+        }
+    </script>
+}

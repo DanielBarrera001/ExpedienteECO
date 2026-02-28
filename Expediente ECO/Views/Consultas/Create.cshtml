@@ -1,0 +1,196 @@
+﻿@model ExpedienteECO.Models.ConsultaViewModel
+
+<div class="dashboard-container py-4">
+    <div class="row g-4">
+        @* COLUMNA IZQUIERDA: Perfil y Alertas *@
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden sticky-top-20">
+                <div class="p-4 text-center border-bottom bg-light bg-opacity-50">
+                    <div class="position-relative d-inline-block mb-3">
+                        <img src="@(string.IsNullOrEmpty(Model.FotoPath) ? "/img/default-user.png" : Model.FotoPath)"
+                             class="rounded-circle border border-4 border-white shadow-sm"
+                             style="width: 110px; height: 110px; object-fit: cover;">
+                        <span class="position-absolute bottom-0 end-0 bg-primary rounded-circle border border-3 border-white p-2">
+                            <i class="bi bi-person-plus-fill text-white" style="font-size: 0.7rem;"></i>
+                        </span>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-1">@Model.NombreEstudiante</h4>
+                    <span class="badge rounded-pill px-3 py-2 border shadow-sm fw-bold mt-1 bg-white text-primary">
+                        <i class="bi bi-book-fill me-1"></i> @Model.GradoSeccion
+                    </span>
+                </div>
+
+                <div class="card-body p-4 pt-2">
+                    <h6 class="label-caps mb-3">Alertas Médicas</h6>
+
+                    @* Alerta Alergias *@
+                    <div class="p-3 rounded-3 mb-3 border-start border-4 @(string.IsNullOrEmpty(Model.Alergias) || Model.Alergias == "Ninguna" ? "bg-light border-secondary" : "border-alert-danger")">
+                        <div class="d-flex align-items-center mb-1">
+                            <i class="bi bi-exclamation-circle-fill me-2 @(string.IsNullOrEmpty(Model.Alergias) || Model.Alergias == "Ninguna" ? "text-muted" : "text-danger")"></i>
+                            <small class="fw-bold text-uppercase text-xs">Alergias</small>
+                        </div>
+                        <span class="small text-dark fw-medium ps-4 d-block">@(Model.Alergias ?? "Ninguna reportada")</span>
+                    </div>
+
+                    @* Alerta Padecimientos *@
+                    <div class="p-3 rounded-3 border-start border-4 @(string.IsNullOrEmpty(Model.PadecimientosCronicos) || Model.PadecimientosCronicos == "Ninguno" ? "bg-light border-secondary" : "border-alert-warning")">
+                        <div class="d-flex align-items-center mb-1">
+                            <i class="bi bi-heart-pulse-fill me-2 @(string.IsNullOrEmpty(Model.PadecimientosCronicos) || Model.PadecimientosCronicos == "Ninguno" ? "text-muted" : "text-warning")"></i>
+                            <small class="fw-bold text-uppercase text-xs">Padecimientos Crónicos</small>
+                        </div>
+                        <span class="small text-dark fw-medium ps-4 d-block">@(Model.PadecimientosCronicos ?? "Ninguno reportado")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* COLUMNA DERECHA: Formulario *@
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5">
+                <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+                    <div class="bg-soft-primario p-2 rounded-3 me-3">
+                        <i class="bi bi-clipboard-plus text-primary fs-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold text-dark mb-0">Nueva Nota Médica</h3>
+                        <p class="text-muted small mb-0">Registre los detalles de la atención actual.</p>
+                    </div>
+                </div>
+
+                <form asp-action="Create" method="post" id="formConsulta">
+                    @Html.AntiForgeryToken()
+
+                    @* Hidden Fields *@
+                    <input type="hidden" asp-for="EstudianteId" />
+                    <input type="hidden" asp-for="UsuarioId" />
+                    <input type="hidden" asp-for="NombreEstudiante" />
+                    <input type="hidden" asp-for="GradoSeccion" />
+                    <input type="hidden" asp-for="FotoPath" />
+                    <input type="hidden" asp-for="Alergias" />
+                    <input type="hidden" asp-for="PadecimientosCronicos" />
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3 small mb-4"></div>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label asp-for="Motivo" class="label-caps d-block mb-1">Motivo de Consulta</label>
+                            <input asp-for="Motivo" class="form-control bg-light border-2 focus-eco py-2" placeholder="Ej: Fiebre..." required />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="SignosVitales" class="label-caps d-block mb-1">Signos Vitales</label>
+                            <input asp-for="SignosVitales" class="form-control bg-light border-2 focus-eco py-2" placeholder="Temp, Presión..." required />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Sintomas" class="label-caps d-block mb-1">Síntomas y Observaciones</label>
+                            <textarea asp-for="Sintomas" class="form-control bg-light border-2 focus-eco py-2" rows="3" required></textarea>
+                        </div>
+
+                        @* Sección de Suministros *@
+                        <div class="col-12 mt-3">
+                            <div class="card bg-soft-primario border-0 rounded-4">
+                                <div class="card-body p-4">
+                                    <h6 class="fw-bold text-primary mb-3 d-flex align-items-center">
+                                        <i class="bi bi-box-seam me-2"></i>Suministro de Farmacia
+                                    </h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-8">
+                                            <label class="form-label small text-muted">Medicamento</label>
+                                            <select asp-for="MedicamentoId" id="selectMedicamento" class="form-select border-2 shadow-sm focus-eco">
+                                                <option value="">-- No se suministró ningún insumo --</option>
+                                                @if (Model.MedicamentosDisponibles != null)
+                                                {
+                                                    foreach (var med in Model.MedicamentosDisponibles.Where(m => m.StockActual > 0))
+                                                    {
+                                                        <option value="@med.Id" data-stock="@med.StockActual">@med.Nombre (Disponible: @med.StockActual)</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label small text-muted">Cantidad</label>
+                                            <div class="input-group shadow-sm rounded">
+                                                <input asp-for="CantidadUsada" id="inputCantidad" type="number" class="form-control border-2" min="0" value="0" />
+                                                <span class="input-group-text bg-white border-2 border-start-0 text-muted small">uds.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <label asp-for="Diagnostico" class="label-caps d-block mb-1">Diagnóstico Presuntivo</label>
+                            <input asp-for="Diagnostico" class="form-control bg-white border-primario border-2 py-2 fw-bold text-dark focus-eco" required />
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Tratamiento" class="label-caps d-block mb-1">Plan de Tratamiento</label>
+                            <textarea asp-for="Tratamiento" class="form-control bg-light border-2 focus-eco py-2" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 d-flex flex-column flex-md-row gap-2 border-top pt-3">
+                        <button type="submit" class="btn btn-escuela-blue rounded-pill px-5 py-2 shadow-sm fw-bold">
+                            <i class="bi bi-save2-fill me-2"></i> Guardar Atención
+                        </button>
+                        <a asp-controller="Estudiantes" asp-action="Index" class="btn btn-light rounded-pill px-4 py-2 border fw-medium text-muted">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const selectMed = document.getElementById("selectMedicamento");
+            const inputCant = document.getElementById("inputCantidad");
+            const form = document.getElementById("formConsulta");
+
+            function toggleCantidad() {
+                if (selectMed.value === "" || selectMed.value === null) {
+                    inputCant.value = 0;
+                    inputCant.disabled = true;
+                    inputCant.classList.add("bg-light");
+                } else {
+                    inputCant.disabled = false;
+                    inputCant.classList.remove("bg-light");
+                    if (inputCant.value == 0) {
+                        inputCant.value = 1;
+                    }
+                }
+            }
+
+            // Inicializar estado
+            toggleCantidad();
+
+            // Evento cambio de medicamento
+            selectMed.addEventListener("change", toggleCantidad);
+
+            // Validación al enviar
+            form.addEventListener("submit", function (e) {
+                const stockDisponible = parseInt(selectMed.options[selectMed.selectedIndex].getAttribute('data-stock') || 0);
+                const cantidadPedida = parseInt(inputCant.value);
+
+                if (selectMed.value !== "") {
+                    if (cantidadPedida <= 0) {
+                        alert("La cantidad debe ser mayor a 0 si selecciona un medicamento.");
+                        e.preventDefault();
+                    } else if (cantidadPedida > stockDisponible) {
+                        alert("No hay suficiente stock. Disponible: " + stockDisponible);
+                        e.preventDefault();
+                    }
+                }
+            });
+        });
+    </script>
+}

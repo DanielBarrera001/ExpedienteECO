@@ -1,12 +1,139 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\reportes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\reportes\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\comunicaciones\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\comunicaciones\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\medicamentos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\medicamentos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Reportes\\Index.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Reportes\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Reportes\\Index.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Reportes\\Index.cshtml",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAowKEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-28T01:53:28.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "Expediente ECO\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "Expediente ECO\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAABcCAAAAAAAAAAAmwCMCAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-02-28T01:48:11.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Error.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Shared\\Error.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Shared\\Error.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Shared\\Error.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Shared\\Error.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-28T01:33:50.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "Expediente ECO\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T01:32:18.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Expediente ECO\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-28T01:32:15.334Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Comunicaciones\\Index.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Comunicaciones\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Comunicaciones\\Index.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Comunicaciones\\Index.cshtml",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAAwIgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-28T01:29:11.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Medicamentos\\Index.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Medicamentos\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Medicamentos\\Index.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Medicamentos\\Index.cshtml",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAowJoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-02-28T01:47:12.8Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

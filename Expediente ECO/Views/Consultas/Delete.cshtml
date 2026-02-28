@@ -1,0 +1,87 @@
+﻿@model ExpedienteECO.Entidades.Consulta
+
+<div class="dashboard-container py-5">
+    <div class="row justify-content-center g-4">
+        @* Tarjeta de Resumen del Registro *@
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden border-top-danger">
+                <div class="card-body p-4 text-center">
+                    <div class="mb-3 position-relative d-inline-block">
+                        <img src="@(string.IsNullOrEmpty(Model.Estudiante?.FotoPath) ? "/img/default-user.png" : Model.Estudiante.FotoPath)"
+                             class="rounded-circle border border-4 border-light shadow-sm"
+                             style="width: 100px; height: 100px; object-fit: cover; opacity: 0.8;">
+                        <span class="position-absolute top-50 start-50 translate-middle">
+                            <i class="bi bi-x-circle-fill text-danger fs-1 opacity-75"></i>
+                        </span>
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">@Model.Estudiante?.NombreCompleto</h5>
+                    <p class="text-muted small mb-3">@Model.Estudiante?.Grado - @Model.Estudiante?.Seccion</p>
+
+                    <div class="bg-light rounded-3 p-3 text-start">
+                        <div class="mb-2">
+                            <small class="label-caps d-block text-xs">Fecha de Registro</small>
+                            <span class="small fw-medium">@Model.FechaHora.ToString("D")</span>
+                        </div>
+                        <div class="mb-2">
+                            <small class="label-caps d-block text-xs">Motivo</small>
+                            <span class="small text-dark text-truncate d-block">@Model.Motivo</span>
+                        </div>
+                        <div>
+                            <small class="label-caps d-block text-xs">Diagnóstico</small>
+                            <span class="small text-dark text-truncate d-block">@Model.Diagnostico</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Panel de Confirmación *@
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg-soft rounded-4 p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="bg-soft-danger d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-exclamation-triangle-fill text-danger display-6"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark">¿Confirmar eliminación?</h3>
+                    <p class="text-muted">
+                        Esta acción es irreversible. El registro clínico del folio <strong>#@Model.Id</strong> desaparecerá permanentemente.
+                    </p>
+                </div>
+
+                @* Alerta de Inventario *@
+                <div class="alert bg-soft-warning border-0 rounded-4 d-flex align-items-start p-3 mb-5">
+                    <i class="bi bi-box-seam text-warning fs-4 me-3 mt-1"></i>
+                    <div class="small">
+                        <strong class="text-dark">Aviso de Inventario:</strong>
+                        Borrar esta consulta <span class="text-danger fw-bold">NO devuelve</span> automáticamente los medicamentos al stock. Deberá ajustarlos manualmente si es necesario.
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <button type="submit" class="btn btn-danger w-100 py-3 rounded-pill shadow-sm fw-bold">
+                                <i class="bi bi-trash3-fill me-2"></i>Eliminar Definitivamente
+                            </button>
+                        </div>
+                        <div class="col-md-5">
+                            <a asp-action="Index" class="btn btn-light border-2 w-100 py-3 rounded-pill fw-bold text-muted hover-light">
+                                Cancelar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-center mt-4 opacity-50">
+                <p class="small text-muted">
+                    <i class="bi bi-shield-lock-fill me-1"></i> Acción de seguridad auditada
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

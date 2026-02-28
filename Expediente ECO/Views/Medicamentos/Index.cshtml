@@ -1,0 +1,155 @@
+﻿@model IEnumerable<ExpedienteECO.Entidades.Medicamento>
+
+@{
+    ViewData["Title"] = "Inventario de Medicamentos";
+}
+
+<div class="dashboard-container py-4 container-fluid">
+
+    @* ENCABEZADO NORMALIZADO (Estilo Alumnos) *@
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0 text-primary" style="color: var(--color-primario) !important;">
+                Inventario de Clínica
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" class="text-decoration-none" style="color: var(--color-primario);">Medicamentos</a>
+                    </li>
+                    <li class="breadcrumb-item active">Listado de Insumos</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Create" class="btn btn-escuela-blue shadow-sm rounded-pill px-4 fw-bold">
+            <i class="bi bi-plus-circle-fill me-1"></i> Nuevo Insumo
+        </a>
+    </div>
+
+    @* SECCIÓN DE FILTROS USANDO LA PARCIAL *@
+    <div class="row mb-4">
+        <partial name="_BuscadorPill" view-data='@new ViewDataDictionary(ViewData) {
+                                                  { "IdBuscador", "busquedaIndex" },
+                                                  { "Placeholder", "Buscar medicamento por nombre o presentación..." },
+                                                  { "ClaseCol", "col-md-5" }
+                                              }' />
+    </div>
+
+    @* TABLA DE MEDICAMENTOS *@
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="tablaMedicamentos" style="width:100%">
+                    <thead class="bg-light border-bottom">
+                        <tr>
+                            <th class="ps-4 py-3 text-uppercase text-xs fw-bold text-muted">Insumo</th>
+                            <th class="text-center py-3 text-uppercase text-xs fw-bold text-muted">Stock Actual</th>
+                            <th class="text-center py-3 text-uppercase text-xs fw-bold text-muted">Mínimo</th>
+                            <th class="py-3 text-uppercase text-xs fw-bold text-muted">Estado</th>
+                            <th class="text-center pe-4 py-3 text-uppercase text-xs fw-bold text-muted">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar-sm bg-soft-primario rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
+                                            <i class="bi bi-box-seam text-primary"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">@item.Nombre</div>
+                                            <small class="text-muted">@item.Presentacion</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="fs-5 fw-bold @(item.StockActual <= item.StockMinimo ? "text-danger" : "text-dark")">
+                                        @item.StockActual
+                                    </span>
+                                </td>
+                                <td class="text-center text-muted">@item.StockMinimo</td>
+                                <td>
+                                    @if (item.StockActual <= 0)
+                                    {
+                                        <span class="badge bg-soft-danger text-danger border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase">Agotado</span>
+                                    }
+                                    else if (item.StockActual <= item.StockMinimo)
+                                    {
+                                        <span class="badge bg-soft-warning text-warning-dark border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase">Stock Bajo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-soft-success text-success border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase">Disponible</span>
+                                    }
+                                </td>
+                                <td class="text-center pe-4">
+                                    <div class="btn-group rounded-3 shadow-xs">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white border btn-sm py-2 px-3" title="Editar">
+                                            <i class="bi bi-pencil-square text-primary"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-white border btn-sm py-2 px-3" onclick="verDetalles(@item.Id)" title="Detalles">
+                                            <i class="bi bi-eye text-info"></i>
+                                        </button>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-white border btn-sm py-2 px-3" title="Eliminar">
+                                            <i class="bi bi-trash3 text-danger"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @* Espaciador para estética de paginación *@
+            <div class="p-3"></div>
+        </div>
+    </div>
+</div>
+
+@* MODAL PARA DETALLES (AJAX) *@
+<div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4" id="contenidoModal">
+            @* Contenido cargado dinámicamente *@
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @* Librerías DataTables *@
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Inicialización de DataTable
+            var table = $('#tablaMedicamentos').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
+                },
+                "responsive": true,
+                "dom": 'rtip',
+                "pageLength": 50,
+                "order": [[0, "asc"]], // Ordenar por nombre por defecto
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 } // Desactivar orden en columna de acciones
+                ]
+            });
+
+            // Conexión del buscador parcial con la tabla
+            $('#busquedaIndex').on('keyup', function () {
+                table.search(this.value).draw();
+            });
+        });
+
+        // Función para cargar el Modal de detalles
+        function verDetalles(id) {
+            $("#contenidoModal").html('<div class="p-5 text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">Cargando información...</p></div>');
+            $("#modalDetalles").modal("show");
+            $("#contenidoModal").load("/Medicamentos/DetailsModal/" + id);
+        }
+    </script>
+}

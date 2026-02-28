@@ -1,0 +1,112 @@
+﻿@model IEnumerable<ExpedienteECO.Entidades.Consulta>
+
+<div class="dashboard-container py-4">
+    @* ENCABEZADO DINÁMICO *@
+    <div class="row align-items-center mb-4">
+        <div class="col-md-7">
+            <h2 class="fw-bold m-0 text-dark">
+                <i class="bi bi-journal-medical me-2" style="color: var(--color-primario);"></i>Bitácora de Consultas
+            </h2>
+            <p class="text-muted small mb-0">Historial cronológico de atenciones médicas escolares.</p>
+        </div>
+        <div class="col-md-5 mt-3 mt-md-0">
+            @* USO DE LA VISTA PARCIAL *@
+            <partial name="_BuscadorPill" view-data='@new ViewDataDictionary(ViewData) {
+                                                          { "IdBuscador", "busquedaAlumno" },
+                                                          { "Placeholder", "Filtrar por nombre de estudiante..." }
+                                                      }' />
+        </div>
+    </div>
+
+    @* CARD PRINCIPAL *@
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        @* Línea decorativa superior institucional *@
+        <div style="height: 4px; width: 100%; background-color: var(--color-primario);"></div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="tablaConsultas">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 text-muted small fw-bold text-uppercase" style="font-size: 0.65rem;">Fecha y Hora</th>
+                            <th class="text-muted small fw-bold text-uppercase" style="font-size: 0.65rem;">Estudiante</th>
+                            <th class="text-muted small fw-bold text-uppercase" style="font-size: 0.65rem;">Motivo / Diagnóstico</th>
+                            <th class="text-muted small fw-bold text-uppercase" style="font-size: 0.65rem;">Tratamiento</th>
+                            <th class="text-end pe-4 text-muted small fw-bold text-uppercase" style="font-size: 0.65rem;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-top-0">
+                        @foreach (var item in Model.OrderByDescending(c => c.FechaHora))
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold text-dark">@item.FechaHora.ToString("dd/MM/yyyy")</span>
+                                        <span class="text-muted small">@item.FechaHora.ToString("hh:mm tt")</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-primary nombre-estudiante" style="color: var(--color-primario) !important;">
+                                        @item.Estudiante.NombreCompleto
+                                    </div>
+                                    <span class="badge bg-soft-primario rounded-pill" style="font-size: 0.65rem;">
+                                        @item.Estudiante.Grado - @item.Estudiante.Seccion
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-soft-info text-info mb-1">@item.Motivo</span>
+                                    <div class="fw-medium text-dark small">@item.Diagnostico</div>
+                                </td>
+                                <td>
+                                    <div class="text-muted small d-flex align-items-start text-truncate-2" style="max-width: 280px;">
+                                        <i class="bi bi-capsule-pill me-2 text-secondary mt-1"></i>
+                                        <span>@item.Tratamiento</span>
+                                    </div>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group shadow-xs rounded-pill bg-white border p-1">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Detalles">
+                                            <i class="bi bi-eye text-primary"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Editar">
+                                            <i class="bi bi-pencil-square text-warning"></i>
+                                        </a>
+                                        <a asp-controller="Reportes" asp-action="ImprimirConsulta" asp-route-id="@item.Id"
+                                           class="btn btn-white btn-sm border-0 rounded-circle" title="Imprimir" target="_blank">
+                                            <i class="bi bi-printer text-dark"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Eliminar">
+                                            <i class="bi bi-trash3 text-danger"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @* FOOTER INFORMATIVO *@
+    <div class="mt-3 text-muted small">
+        <i class="bi bi-info-circle me-1"></i> Mostrando las últimas consultas registradas. Use el buscador para localizar expedientes específicos.
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Lógica de filtrado para el buscador de la parcial
+        document.addEventListener('input', function (e) {
+            if (e.target && e.target.id === 'busquedaAlumno') {
+                let filtro = e.target.value.toLowerCase().trim();
+                let filas = document.querySelectorAll('#tablaConsultas tbody tr');
+
+                filas.forEach(fila => {
+                    let nombre = fila.querySelector('.nombre-estudiante').textContent.toLowerCase();
+                    fila.style.display = nombre.includes(filtro) ? '' : 'none';
+                });
+            }
+        });
+    </script>
+}

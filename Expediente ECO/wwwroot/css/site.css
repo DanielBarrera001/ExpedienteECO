@@ -1,22 +1,583 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+:root {
+    /* Identidad Escuela */
+    --color-primario: #335599; /* Azul Institucional */
+    --color-secundario: #a6312c; /* Rojo Institucional */
+    --bg-light: #f9f9f9;
+    --blanco: #ffffff;
+    /* Estados de Acción Normalizados */
+    --color-info: #17a2b8;
+    --color-warning: #ffc107;
+    --color-danger: #a6312c; /* Usamos el rojo de la escuela para peligro */
+    /* Variables nuevas para efectos de enfoque y estados suaves */
+    --color-primario-soft: rgba(51, 85, 153, 0.15);
+    --color-success-soft: #f0fff4;
+    --color-danger-soft: #fff5f5;
+    --color-warning-soft: #fff9db;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: var(--bg-light);
+    font-family: 'Poppins', sans-serif;
+    color: #444;
 }
+
+/* --- Contenedores y Tarjetas --- */
+.dashboard-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+.info-card {
+    transition: all 0.3s ease;
+    border: none;
+    background-color: var(--blanco);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+/* --- NUEVO: Buscador Estilo Píldora --- */
+.search-wrapper .form-control {
+    height: 45px;
+    border-color: #dee2e6;
+    border-width: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Esta clase es la que aplicarás a tus buscadores */
+.focus-pill:focus {
+    border-color: var(--color-primario) !important;
+    box-shadow: 0 0 0 0.25rem var(--color-primario-soft) !important;
+    outline: 0;
+}
+
+/* --- Icon Boxes --- */
+.icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.bg-soft-primario {
+    background-color: rgba(51, 85, 153, 0.1);
+    color: var(--color-primario);
+}
+
+.bg-soft-secundario {
+    background-color: rgba(166, 49, 44, 0.1);
+    color: var(--color-secundario);
+}
+
+.bg-soft-warning {
+    background-color: var(--color-warning-soft);
+    color: #f08c00;
+}
+
+/* --- Tabla y Avatares --- */
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-primario);
+}
+
+tbody tr {
+    transition: background-color 0.2s;
+}
+
+    tbody tr:hover {
+        background-color: rgba(51, 85, 153, 0.02);
+    }
+
+/* --- NUEVO: Ajustes Paginación DataTables --- */
+/* Esto despega los números de página de la orilla */
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    padding: 1.5rem !important;
+}
+
+/* --- Botones Personalizados --- */
+.btn-escuela-blue {
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+    .btn-escuela-blue:hover {
+        background-color: #264073;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+.btn-escuela-red {
+    background-color: var(--color-secundario);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para Formularios Modernos */
+.focus-blue:focus {
+    border-color: var(--color-primario) !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 0.25rem rgba(51, 85, 153, 0.1) !important;
+}
+
+.bg-soft-warning {
+    background-color: rgba(255, 193, 7, 0.08) !important;
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.form-label-custom {
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.7rem !important;
+    font-weight: bold;
+    color: #6c757d;
+}
+
+/* Contenedor de switch para crónicos */
+.cronico-container {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.cronico-active {
+    border-color: #ffc107 !important;
+    background-color: rgba(255, 193, 7, 0.08) !important;
+}
+
+/* Utilidades de Diseño para Expedientes */
+.bg-soft-danger-light {
+    background-color: rgba(220, 53, 69, 0.03) !important;
+}
+
+.bg-soft-secundario {
+    background-color: rgba(108, 117, 125, 0.05) !important;
+}
+
+.border-dashed-custom {
+    border: 2px dashed #dee2e6 !important;
+}
+
+.shadow-xs {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Botones y Grupos Especiales */
+.btn-white {
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+    .btn-white:hover {
+        background-color: #f8f9fa;
+        color: var(--color-primario);
+    }
+
+.label-caps {
+    font-size: 0.65rem !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+}
+
+/* Animaciones de Interfaz */
+.animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contenedores de Acción Destructiva */
+.bg-soft-danger-light {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.confirm-card {
+    max-width: 450px;
+    border-top: 6px solid #dc3545 !important;
+}
+
+.text-xs {
+    font-size: 0.7rem !important;
+}
+
+/* Formularios y Estados de Foco */
+.focus-blue:focus {
+    border-color: var(--color-primario) !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 0.25rem rgba(51, 85, 153, 0.1);
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+    font-size: 0.85rem;
+}
+
+/* Diseño de Formulario de Registro */
+.border-end-md {
+    border-right: 1px solid #dee2e6;
+}
+
+@media (max-width: 768px) {
+    .border-end-md {
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 2rem;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Componentes de Perfil */
+.profile-preview-wrapper {
+    background: #f8f9fa;
+    border-radius: 50%;
+    padding: 5px;
+    display: inline-block;
+}
+
+.bg-soft-warning-light {
+    background-color: rgba(255, 193, 7, 0.08) !important;
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Interacción de Listas de Resultados */
+.list-group-item-action {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+    .list-group-item-action:hover {
+        background-color: #f0f4f8 !important;
+        transform: scale(1.005);
+        z-index: 2;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+/* Badges de Salud */
+.text-xs {
+    font-size: 0.7rem !important;
+}
+
+.bg-soft-primario {
+    background-color: rgba(51, 85, 153, 0.1) !important;
+}
+
+/* Estados de Advertencia y Edición */
+.bg-soft-warning {
+    background-color: rgba(255, 193, 7, 0.12) !important;
+}
+
+.bg-soft-info {
+    background-color: rgba(13, 202, 240, 0.08) !important;
+}
+
+.focus-warning:focus {
+    border-color: #ffc107 !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.15);
+}
+
+/* Utilidades de Posicionamiento */
+.sticky-top-20 {
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+}
+
+/* Alertas de borde dinámico */
+.border-alert-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-left: 3px solid #dc3545 !important;
+}
+
+.border-alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 3px solid #ffc107 !important;
+}
+
+/* Estados de Peligro y Eliminación */
+.bg-soft-danger {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.border-top-danger {
+    border-top: 4px solid #dc3545 !important;
+}
+
+.hover-light:hover {
+    background-color: #f8f9fa !important;
+    border-color: #dee2e6 !important;
+}
+
+/* Sombras más profundas para alertas críticas */
+.shadow-lg-soft {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Colores Institucionales ECO */
+:root {
+    --color-primario: #335599;
+    --color-primario-dark: #26427a;
+}
+
+/* Foco Personalizado */
+.focus-eco:focus {
+    border-color: var(--color-primario) !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 0.25rem rgba(51, 85, 153, 0.1) !important;
+}
+
+/* Botón Institucional */
+.btn-escuela-blue {
+    background-color: var(--color-primario);
+    color: white;
+    transition: all 0.2s ease-in-out;
+    border: none;
+}
+
+    .btn-escuela-blue:hover {
+        background-color: var(--color-primario-dark);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(51, 85, 153, 0.2);
+    }
+
+/* Utilidades de Alertas */
+.bg-soft-primario {
+    background-color: rgba(51, 85, 153, 0.12) !important;
+}
+
+.border-primario {
+    border-color: var(--color-primario) !important;
+}
+
+/* --- Centro de Reportes y Estilos Globales --- */
+/* --- Paleta de Colores Institucional ExpedienteECO --- */
+:root {
+    --escuela-blue: #003366; /* Azul oscuro institucional */
+    --escuela-blue-light: #004080;
+    --soft-primario: rgba(0, 51, 102, 0.08);
+    --soft-success: rgba(25, 135, 84, 0.1);
+    --soft-danger: rgba(220, 53, 69, 0.1);
+}
+
+/* Clases de Utilidad Personalizadas */
+.bg-soft-primario {
+    background-color: var(--soft-primario);
+}
+
+.text-escuela-blue {
+    color: var(--escuela-blue);
+}
+
+.btn-escuela-blue {
+    background-color: var(--escuela-blue);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .btn-escuela-blue:hover {
+        background-color: var(--escuela-blue-light);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 51, 102, 0.2);
+    }
+
+/* Tarjetas y Efectos */
+.hover-card {
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid rgba(0,0,0,0.05) !important;
+}
+
+    .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 51, 102, 0.1) !important;
+    }
+
+/* Select2 con colores de la escuela */
+.select2-container--bootstrap-5 .select2-selection {
+    border: 2px solid #dee2e6 !important;
+    border-radius: 0.5rem !important;
+    min-height: 45px !important;
+}
+
+.select2-container--bootstrap-5.select2-container--focus .select2-selection {
+    border-color: var(--escuela-blue) !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 51, 102, 0.15) !important;
+}
+
+/* --- Variables de Identidad Institucional --- */
+:root {
+    --color-institucional: #003366; /* Azul Oasis */
+    --color-soft: #eef4ff;
+    --color-texto: #2c3e50;
+    --border-radius-custom: 10px;
+}
+
+/* --- Configuración General --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f9;
+    color: var(--color-texto);
+}
+
+/* --- Navegación Personalizada --- */
+.navbar {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+    border-bottom: 3px solid var(--color-institucional);
+    padding: 0.6rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    color: var(--color-institucional) !important;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+.brand-logo {
+    height: 45px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+    .brand-logo:hover {
+        transform: scale(1.05);
+    }
+
+/* Estilo de los enlaces del menú */
+.nav-link {
+    font-weight: 600;
+    color: #555 !important;
+    padding: 0.6rem 1.2rem !important;
+    margin: 0 3px;
+    border-radius: var(--border-radius-custom);
+    transition: all 0.2s ease-in-out;
+}
+
+    .nav-link:hover {
+        background-color: var(--color-soft);
+        color: var(--color-institucional) !important;
+    }
+
+    .nav-link.active {
+        background-color: var(--color-institucional) !important;
+        color: #ffffff !important;
+    }
+
+/* --- Componentes UI --- */
+.badge.bg-soft-primary {
+    background-color: var(--color-soft);
+    color: var(--color-institucional);
+    border: 1px solid rgba(0, 51, 102, 0.1);
+}
+
+/* Botón de Cerrar Sesión Normalizado */
+.btn-logout {
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    font-weight: 600;
+    background-color: transparent;
+}
+
+    .btn-logout:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+/* --- Ajustes de Tarjetas y Tablas (Para que combinen) --- */
+.card {
+    border: none;
+    border-radius: var(--border-radius-custom);
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    background-color: var(--color-institucional);
+    color: white;
+    font-weight: 600;
+    border-radius: var(--border-radius-custom) var(--border-radius-custom) 0 0 !important;
+}
+
+/* --- Footer --- */
+.footer {
+    background: white;
+    padding: 2rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid #dee2e6;
+}
+
+/* --- Mejoras para el Login --- */
+.custom-input-group {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+    .custom-input-group:focus-within {
+        border-color: var(--color-institucional);
+        box-shadow: 0 0 0 0.25rem rgba(0, 51, 102, 0.1) !important;
+    }
+
+    .custom-input-group .form-control {
+        border: none !important;
+        box-shadow: none !important;
+        font-size: 0.95rem;
+    }
+
+    .custom-input-group .input-group-text {
+        border: none !important;
+        font-size: 1.1rem;
+    }

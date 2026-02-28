@@ -1,0 +1,170 @@
+﻿@model ExpedienteECO.Entidades.Medicamento
+
+@{
+    ViewData["Title"] = "Entrada de Inventario";
+}
+
+<div class="dashboard-container py-4 container-fluid">
+    <div class="row g-4">
+        @* COLUMNA IZQUIERDA: CREACIÓN DE NUEVO INSUMO *@
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                <div class="p-4 text-white" style="background-color: #198754;">
+                    @* Color Success Institucional *@
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-25 p-2 rounded-3 me-3">
+                            <i class="bi bi-plus-square fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">Nuevo Medicamento</h5>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="alert bg-soft-primario border-0 rounded-3 mb-4">
+                        <p class="text-muted small mb-0">
+                            <i class="bi bi-info-circle me-1 text-primary"></i>
+                            Use esta sección solo si el medicamento <strong>no existe</strong> en el listado.
+                        </p>
+                    </div>
+
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Nombre" class="label-caps mb-2">Nombre</label>
+                            <input asp-for="Nombre" class="form-control bg-light border-2 focus-eco py-2" placeholder="Ej: Amoxicilina" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Presentacion" class="label-caps mb-2">Presentación</label>
+                            <input asp-for="Presentacion" class="form-control bg-light border-2 focus-eco py-2" placeholder="Ej: Tabletas 500mg" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Indicaciones" class="label-caps mb-2">Indicaciones/Uso</label>
+                            <textarea asp-for="Indicaciones" class="form-control bg-light border-2 focus-eco py-2" rows="2" placeholder="Instrucciones básicas..."></textarea>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label asp-for="StockActual" class="label-caps mb-2 text-primary">Stock Inicial</label>
+                                <input asp-for="StockActual" type="number" class="form-control border-2 focus-eco" value="0" min="0" />
+                            </div>
+                            <div class="col-6">
+                                <label asp-for="StockMinimo" class="label-caps mb-2 text-danger">Alerta Mínimo</label>
+                                <input asp-for="StockMinimo" type="number" class="form-control border-2 focus-eco" value="10" min="0" />
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="bi bi-check-circle me-2"></i> Guardar Nuevo Insumo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <a asp-action="Index" class="btn btn-light border rounded-pill w-100 py-2 text-muted fw-medium">
+                <i class="bi bi-arrow-left me-1"></i> Volver al Inventario
+            </a>
+        </div>
+
+        @* COLUMNA DERECHA: REINGRESO DE STOCK *@
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header border-0 p-4" style="background-color: var(--color-primario);">
+                    <div class="row align-items-center g-3">
+                        <div class="col-md-6">
+                            <h5 class="mb-0 text-white fw-bold">
+                                <i class="bi bi-arrow-repeat me-2"></i>Reingreso de Stock
+                            </h5>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group input-group-sm rounded-pill overflow-hidden bg-white border-0 px-2">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-search text-primary"></i></span>
+                                <input type="text" id="busquedaMedicamento" class="form-control border-0 shadow-none py-2" placeholder="Buscar para reingreso...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 550px;">
+                        <table class="table table-hover align-middle mb-0" id="tablaReingreso">
+                            <thead class="bg-light sticky-top">
+                                <tr>
+                                    <th class="ps-4 py-3 text-uppercase text-xs fw-bold text-muted">Nombre</th>
+                                    <th class="text-center py-3 text-uppercase text-xs fw-bold text-muted">Stock Actual</th>
+                                    <th class="text-center py-3 text-uppercase text-xs fw-bold text-muted pe-4" style="width: 220px;">Añadir Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in (List<ExpedienteECO.Entidades.Medicamento>)ViewBag.MedicamentosExistentes)
+                                {
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-dark">@item.Nombre</td>
+                                        <td class="text-center">
+                                            @if (item.StockActual <= item.StockMinimo)
+                                            {
+                                                <span class="badge bg-soft-warning text-warning-dark border-0 rounded-pill px-3 py-2 fw-bold">
+                                                    @item.StockActual uds (Bajo)
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-soft-primario text-primary border-0 rounded-pill px-3 py-2 fw-bold">
+                                                    @item.StockActual en stock
+                                                </span>
+                                            }
+                                        </td>
+                                        <td class="pe-4">
+                                            <form asp-action="Reingreso" asp-controller="Medicamentos" method="post" class="d-flex gap-2">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <input type="number" name="cantidadSumar" class="form-control form-control-sm border-2 focus-eco text-center" placeholder="+" min="1" required />
+                                                <button type="submit" class="btn btn-sm btn-escuela-blue px-3 rounded-3">
+                                                    <i class="bi bi-plus-lg"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($.fn.DataTable) {
+                var table = $('#tablaReingreso').DataTable({
+                    "language": { "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json" },
+                    "pageLength": 50, // Ajustado a 50
+                    "dom": 'rtip',
+                    "ordering": false,
+                    "order": [[1, 'asc']]
+                });
+
+                $('#busquedaMedicamento').on('keyup', function () {
+                    table.search(this.value).draw();
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,180 @@
+﻿@model ExpedienteECO.Entidades.Estudiante
+
+<div class="dashboard-container py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold m-0 text-dark">Nuevo Ingreso</h2>
+        <p class="text-muted">Complete el formulario para aperturar el expediente clínico institucional.</p>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+        @* Barra de identidad institucional *@
+        <div class="bg-primario" style="height: 5px; width: 100%;"></div>
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data" class="p-4 p-lg-5">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3 small shadow-sm mb-4"></div>
+
+            <div class="row g-4">
+                @* Columna de Fotografía *@
+                <div class="col-md-4 text-center border-end-md">
+                    <h6 class="label-caps mb-4">Fotografía del Alumno</h6>
+                    <div class="position-relative d-inline-block">
+                        <div class="profile-preview-wrapper shadow-sm">
+                            <img id="preview" src="/img/default-user.png" class="rounded-circle border border-4 border-white"
+                                 style="width: 180px; height: 180px; object-fit: cover;" alt="Vista previa" />
+                        </div>
+                        <label for="fotoInput" class="btn btn-primary btn-sm rounded-circle position-absolute bottom-0 end-0 p-2 shadow-sm border border-2 border-white"
+                               style="background-color: var(--color-primario);" title="Subir fotografía">
+                            <i class="bi bi-camera-fill fs-5"></i>
+                        </label>
+                    </div>
+                    <input type="file" name="fotoFile" id="fotoInput" class="d-none" accept="image/*" onchange="previewImage(event)" />
+                    <div class="mt-3 px-3">
+                        <p class="small text-muted mb-0">La foto facilita la identificación visual inmediata del estudiante.</p>
+                    </div>
+                </div>
+
+                @* Columna de Formulario *@
+                <div class="col-md-8">
+                    <div class="row g-3">
+                        @* SECCIÓN 1: DATOS ACADÉMICOS *@
+                        <h5 class="fw-bold pb-2 text-dark d-flex align-items-center">
+                            <span class="badge bg-soft-primario text-primary me-2 rounded-circle">1</span>
+                            Información Académica
+                        </h5>
+
+                        <div class="col-md-12">
+                            <label asp-for="NombreCompleto" class="label-caps d-block mb-1">Nombre Completo</label>
+                            <input asp-for="NombreCompleto" class="form-control bg-light border-2 focus-blue" placeholder="Ej: Juan Pérez Martínez" required />
+                            <span asp-validation-for="NombreCompleto" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label asp-for="Grado" class="label-caps d-block mb-1">Grado Escolar</label>
+                            <select asp-for="Grado" class="form-select bg-light border-2 focus-blue" asp-items="ViewBag.Grados" required>
+                                <option value="">-- Seleccione --</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label asp-for="Seccion" class="label-caps d-block mb-1">Sección</label>
+                            <select asp-for="Seccion" class="form-select bg-light border-2 focus-blue" required>
+                                <option value="A">Sección A</option>
+                                <option value="B">Sección B</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label asp-for="FechaNacimiento" class="label-caps d-block mb-1">Fecha Nacimiento</label>
+                            <input asp-for="FechaNacimiento" type="date" class="form-control bg-light border-2 focus-blue" required />
+                        </div>
+
+                        @* SECCIÓN 2: SALUD Y CONTACTO *@
+                        <h5 class="fw-bold pb-2 mt-4 text-dark d-flex align-items-center">
+                            <span class="badge bg-soft-primario text-primary me-2 rounded-circle">2</span>
+                            Salud y Emergencia
+                        </h5>
+
+                        <div class="col-md-6">
+                            <label asp-for="NombrePadre" class="label-caps d-block mb-1">Nombre del Responsable</label>
+                            <input asp-for="NombrePadre" class="form-control bg-light border-2 focus-blue" placeholder="Nombre del Padre o Madre" required />
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="TelefonoResponsable" class="label-caps d-block mb-1">WhatsApp Emergencia</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-2 border-end-0 text-success"><i class="bi bi-whatsapp"></i></span>
+                                <input asp-for="TelefonoResponsable" class="form-control bg-light border-2 focus-blue" placeholder="0000-0000" required />
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="p-3 rounded-4 border border-2 transition-all bg-light" id="containerPadecimiento">
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input" type="checkbox" role="switch" asp-for="TienePadecimiento" id="switchCronico">
+                                    <label class="form-check-label fw-bold text-dark" for="switchCronico">¿Posee padecimientos crónicos?</label>
+                                </div>
+
+                                <div id="seccionPadecimientos" style="display: none;" class="mt-3">
+                                    <label class="label-caps d-block mb-1">Condición Médica</label>
+                                    <select asp-for="PadecimientosCronicos" class="form-select bg-white border-2" id="selectPadecimiento">
+                                        <option value="Ninguno">-- Seleccione una opción --</option>
+                                        <option value="Asma">Asma</option>
+                                        <option value="Diabetes">Diabetes</option>
+                                        <option value="Hipertensión">Hipertensión</option>
+                                        <option value="Alergia Grave">Alergia Grave</option>
+                                        <option value="Epilepsia">Epilepsia</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Alergias" class="label-caps d-block mb-1">Alergias Conocidas</label>
+                            <textarea asp-for="Alergias" class="form-control bg-light border-2 focus-blue" rows="2" placeholder="Indique alergias o escriba 'Ninguna'"></textarea>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="MedicacionPermanente" class="label-caps d-block mb-1">Medicación Permanente</label>
+                            <textarea asp-for="MedicacionPermanente" class="form-control bg-light border-2 focus-blue" rows="2" placeholder="Escriba el nombre del medicamento o 'Ninguna'"></textarea>
+                        </div>
+
+                        <h5 class="fw-bold pb-2 mt-4 text-dark d-flex align-items-center">
+                            <span class="badge bg-soft-primario text-primary me-2 rounded-circle">3</span>
+                            Observaciones
+                        </h5>
+
+                        <div class="col-12">
+                            <label asp-for="NotasEspeciales" class="label-caps d-block mb-1">Notas Adicionales</label>
+                            <textarea asp-for="NotasEspeciales" class="form-control bg-light border-2 focus-blue" rows="4" placeholder="Ej: Usa lentes, ansiedad, etc."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @* Botonera *@
+            <div class="mt-5 pt-3 border-top text-center d-flex flex-column flex-md-row justify-content-center gap-3">
+                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 shadow-sm fw-bold" style="background-color: var(--color-primario);">
+                    <i class="bi bi-person-plus-fill me-2"></i> Crear Expediente
+                </button>
+                <a asp-action="Index" class="btn btn-light rounded-pill px-5 py-2 border fw-medium text-muted">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        const switchCronico = document.getElementById('switchCronico');
+        const seccion = document.getElementById('seccionPadecimientos');
+        const contenedor = document.getElementById('containerPadecimiento');
+
+        switchCronico.addEventListener('change', function() {
+            if(this.checked) {
+                seccion.style.display = 'block';
+                contenedor.classList.add('bg-soft-warning-light', 'border-warning');
+                contenedor.classList.remove('bg-light');
+            } else {
+                seccion.style.display = 'none';
+                contenedor.classList.remove('bg-soft-warning-light', 'border-warning');
+                contenedor.classList.add('bg-light');
+                document.getElementById('selectPadecimiento').value = "Ninguno";
+            }
+        });
+    </script>
+}

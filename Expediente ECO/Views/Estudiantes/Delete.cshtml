@@ -1,0 +1,52 @@
+﻿@model ExpedienteECO.Entidades.Estudiante
+
+<div class="dashboard-container d-flex justify-content-center align-items-center bg-light" style="min-height: 80vh;">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden animate-slide-up confirm-card">
+
+        <div class="card-body p-5 text-center">
+            <div class="mb-4">
+                @* Icono de advertencia central *@
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-soft-danger-light p-4 mb-3">
+                    <i class="bi bi-exclamation-triangle-fill display-4 text-danger"></i>
+                </div>
+
+                <h3 class="fw-bold text-dark">Confirmar Eliminación</h3>
+                <p class="text-muted small px-3">
+                    Se borrará permanentemente el expediente clínico y todo el historial de consultas de:
+                </p>
+
+                @* Nombre del estudiante destacado *@
+                <div class="bg-white border rounded-3 py-2 px-3 mb-2 fw-bold text-dark shadow-sm">
+                    @Model.NombreCompleto
+                </div>
+
+                <span class="text-danger fw-bold label-caps">
+                    <i class="bi bi-info-circle me-1"></i> Esta acción no se puede deshacer.
+                </span>
+            </div>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="d-grid gap-2 mt-4">
+                    @* Botón de acción destructiva *@
+                    <button type="submit" class="btn btn-danger rounded-pill py-2 fw-bold shadow-sm transition-all">
+                        <i class="bi bi-trash3-fill me-2"></i> Confirmar Eliminación
+                    </button>
+
+                    @* Botón de cancelación *@
+                    <a asp-action="Index" class="btn btn-light rounded-pill py-2 text-muted fw-medium mt-1">
+                        No, mantener registro
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        @* Footer de seguridad *@
+        <div class="card-footer bg-light border-0 py-3 text-center">
+            <small class="text-muted fst-italic text-xs">
+                Seguridad del Sistema ECO - @DateTime.Now.Year
+            </small>
+        </div>
+    </div>
+</div>

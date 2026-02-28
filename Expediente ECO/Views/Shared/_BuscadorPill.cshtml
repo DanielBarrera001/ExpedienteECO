@@ -1,0 +1,8 @@
+﻿
+<div class="search-wrapper position-relative mb-4">
+    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3" style="color: var(--color-primario);"></i>
+    <input type="text"
+           id="@(ViewData["IdBuscador"] ?? "busquedaGeneral")"
+           class="form-control ps-5 rounded-pill focus-pill"
+           placeholder="@(ViewData["Placeholder"] ?? "Buscar...")">
+</div>

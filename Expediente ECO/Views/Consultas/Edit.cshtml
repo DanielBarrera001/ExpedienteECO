@@ -1,0 +1,133 @@
+﻿@model ExpedienteECO.Models.ConsultaViewModel
+
+<div class="dashboard-container py-4">
+    <div class="row g-4">
+        @* Columna Lateral: Perfil del Estudiante *@
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 sticky-top-20">
+                <div class="bg-soft-warning p-4 text-center border-bottom border-warning border-opacity-25">
+                    <div class="position-relative d-inline-block">
+                        <img src="@(string.IsNullOrEmpty(Model.FotoPath) ? "/img/default-user.png" : Model.FotoPath)"
+                             class="rounded-circle border border-4 border-white shadow-sm"
+                             style="width: 110px; height: 110px; object-fit: cover;">
+                        <span class="position-absolute bottom-0 end-0 badge rounded-circle bg-warning p-2 border border-3 border-white">
+                            <i class="bi bi-pencil-fill text-dark" style="font-size: 0.7rem;"></i>
+                        </span>
+                    </div>
+                    <h5 class="fw-bold text-dark mt-3 mb-1">@Model.NombreEstudiante</h5>
+                    <span class="badge bg-white text-primary border rounded-pill px-3">
+                        @Model.GradoSeccion
+                    </span>
+                </div>
+
+                <div class="card-body bg-light bg-opacity-50">
+                    <h6 class="label-caps mb-3">Alertas Médicas</h6>
+
+                    @* Alerta Alergias *@
+                    <div class="d-flex align-items-start mb-3 p-2 rounded-3 @(string.IsNullOrEmpty(Model.Alergias) || Model.Alergias == "Ninguna" ? "bg-white" : "border-alert-danger")">
+                        <i class="bi bi-exclamation-octagon-fill me-2 @(string.IsNullOrEmpty(Model.Alergias) || Model.Alergias == "Ninguna" ? "text-muted" : "text-danger")"></i>
+                        <div>
+                            <small class="fw-bold d-block text-dark text-xs">ALERGIAS</small>
+                            <span class="small text-muted">@(Model.Alergias ?? "Ninguna reportada")</span>
+                        </div>
+                    </div>
+
+                    @* Alerta Padecimientos *@
+                    <div class="d-flex align-items-start p-2 rounded-3 @(string.IsNullOrEmpty(Model.PadecimientosCronicos) || Model.PadecimientosCronicos == "Ninguno" ? "bg-white" : "border-alert-warning")">
+                        <i class="bi bi-heart-pulse-fill me-2 @(string.IsNullOrEmpty(Model.PadecimientosCronicos) || Model.PadecimientosCronicos == "Ninguno" ? "text-muted" : "text-warning")"></i>
+                        <div>
+                            <small class="fw-bold d-block text-dark text-xs">PADECIMIENTOS CRÓNICOS</small>
+                            <span class="small text-muted">@(Model.PadecimientosCronicos ?? "Ninguno reportado")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Columna Principal: Formulario *@
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-0 pt-4 px-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold m-0 text-dark">
+                            <i class="bi bi-pencil-square me-2 text-warning"></i>Modificar Nota Médica
+                        </h5>
+                        <span class="badge bg-light text-muted border fw-normal">Folio: #@Model.Id</span>
+                    </div>
+                    <hr class="text-muted opacity-25 mt-3">
+                </div>
+
+                <div class="card-body px-4 pb-4">
+                    <form asp-action="Edit" method="post">
+                        @Html.AntiForgeryToken()
+                        @* Hidden Fields *@
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="EstudianteId" />
+                        <input type="hidden" asp-for="UsuarioId" />
+                        <input type="hidden" asp-for="NombreEstudiante" />
+                        <input type="hidden" asp-for="GradoSeccion" />
+                        <input type="hidden" asp-for="FotoPath" />
+                        <input type="hidden" asp-for="Alergias" />
+                        <input type="hidden" asp-for="PadecimientosCronicos" />
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3 small shadow-sm mb-4"></div>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label asp-for="Motivo" class="label-caps d-block mb-1">Motivo de Consulta</label>
+                                <input asp-for="Motivo" class="form-control bg-light border-2 focus-warning" placeholder="Ej: Cefalea..." required />
+                                <span asp-validation-for="Motivo" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="SignosVitales" class="label-caps d-block mb-1">Signos Vitales</label>
+                                <input asp-for="SignosVitales" class="form-control bg-light border-2 focus-warning" placeholder="T: 37°C..." required />
+                                <span asp-validation-for="SignosVitales" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Sintomas" class="label-caps d-block mb-1">Síntomas y Observaciones</label>
+                                <textarea asp-for="Sintomas" class="form-control bg-light border-2 focus-warning" rows="3" required></textarea>
+                            </div>
+
+                            @* Banner de Control de Inventario *@
+                            <div class="col-12">
+                                <div class="p-3 rounded-4 bg-soft-info border border-info border-opacity-25 d-flex align-items-center">
+                                    <i class="bi bi-info-circle-fill fs-4 text-info me-3"></i>
+                                    <p class="small mb-0 text-dark">
+                                        <strong>Control de Inventario:</strong> Los medicamentos suministrados no son editables. Para corregir el inventario, debe anular la consulta y crear una nueva.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Diagnostico" class="label-caps d-block mb-1">Diagnóstico Médico</label>
+                                <input asp-for="Diagnostico" class="form-control bg-light border-2 focus-warning fw-bold text-dark" required />
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Tratamiento" class="label-caps d-block mb-1">Plan de Tratamiento / Indicaciones</label>
+                                <textarea asp-for="Tratamiento" class="form-control bg-light border-2 focus-warning" rows="4" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-3 border-top d-flex flex-column flex-md-row gap-2">
+                            <button type="submit" class="btn btn-warning rounded-pill px-5 py-2 shadow-sm fw-bold">
+                                <i class="bi bi-check-circle-fill me-2"></i> Actualizar Nota
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill px-4 py-2 border">
+                                Cancelar y Regresar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

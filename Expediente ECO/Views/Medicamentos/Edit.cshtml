@@ -1,0 +1,80 @@
+﻿@model ExpedienteECO.Entidades.Medicamento
+
+<div class="dashboard-container py-5 container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+                @* Encabezado con Azul Escuela ECO *@
+                <div class="p-4 text-white text-center" style="background-color: var(--color-primario);">
+                    <div class="bg-white bg-opacity-25 d-inline-block p-3 rounded-circle mb-3">
+                        <i class="bi bi-pencil-square fs-3"></i>
+                    </div>
+                    <h4 class="fw-bold mb-0">Editar Insumo</h4>
+                    <p class="small mb-0 opacity-75">Actualice la información del inventario</p>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-4">
+                            <label asp-for="Nombre" class="label-caps mb-2">Nombre del Medicamento</label>
+                            <input asp-for="Nombre" class="form-control bg-light border-2 focus-eco py-2" placeholder="Ej: Paracetamol 500mg" required />
+                            <span asp-validation-for="Nombre" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Presentacion" class="label-caps mb-2">Presentación</label>
+                            <input asp-for="Presentacion" class="form-control bg-light border-2 focus-eco py-2" placeholder="Ej: Tabletas, Jarabe..." />
+                            <span asp-validation-for="Presentacion" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Indicaciones" class="label-caps mb-2">Indicaciones de Uso</label>
+                            <textarea asp-for="Indicaciones" class="form-control bg-light border-2 focus-eco py-2" rows="3" placeholder="Dosis recomendada o precauciones..."></textarea>
+                            <span asp-validation-for="Indicaciones" class="text-danger small"></span>
+                        </div>
+
+                        @* Contenedor de Stock con fondo tenue *@
+                        <div class="p-3 rounded-4 mb-4" style="background-color: #f8faff; border: 1px dashed #dee2e6;">
+                            <div class="row g-3">
+                                <div class="col-6">
+                                    <label asp-for="StockActual" class="label-caps mb-2 text-primary">Stock Actual</label>
+                                    <div class="input-group">
+                                        <input asp-for="StockActual" class="form-control border-2 focus-eco" type="number" min="0" />
+                                        <span class="input-group-text bg-white border-2 border-start-0 text-muted small">uds.</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="StockMinimo" class="label-caps mb-2 text-danger">Stock Mínimo</label>
+                                    <div class="input-group">
+                                        <input asp-for="StockMinimo" class="form-control border-2 focus-eco" type="number" min="0" />
+                                        <span class="input-group-text bg-white border-2 border-start-0 text-muted small">uds.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @* Botonera *@
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-escuela-blue rounded-pill py-2 fw-bold shadow-sm">
+                                <i class="bi bi-check-circle-fill me-2"></i> Guardar Cambios
+                            </button>
+                            <a asp-action="Index" class="btn btn-light rounded-pill py-2 border fw-medium text-muted">
+                                <i class="bi bi-arrow-left me-1"></i> Regresar al Inventario
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

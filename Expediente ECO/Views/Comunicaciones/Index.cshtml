@@ -1,0 +1,136 @@
+﻿@{
+    ViewData["Title"] = "Comunicaciones y Enlaces";
+}
+
+<div class="container-fluid dashboard-container">
+    <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+        <div class="bg-soft-primary p-3 rounded-circle me-3 shadow-sm">
+            <i class="bi bi-chat-dots-fill fs-3"></i>
+        </div>
+        <div>
+            <h2 class="fw-bold mb-0 text-escuela-blue">Comunicaciones e Interconectividad</h2>
+            <p class="text-muted mb-0 small">Centro de ayuda y accesos directos del ecosistema Oasis</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                <div class="card-header border-0 bg-white pt-4 px-4">
+                    <h6 class="fw-bold d-flex align-items-center mb-0 text-escuela-blue">
+                        <span class="p-2 bg-light rounded me-2">
+                            <i class="bi bi-headset text-primary"></i>
+                        </span>
+                        Asistencia Técnica
+                    </h6>
+                </div>
+                <div class="card-body px-4">
+                    <p class="text-xs text-muted mb-4">Canales oficiales para reporte de fallas o consultas técnicas del sistema.</p>
+
+                    <div class="p-3 border rounded-3 bg-light mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="label-caps">Correo Institucional</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between bg-white p-2 rounded border overflow-hidden">
+                            <span class="text-dark fw-bold mb-0 text-truncate me-2" id="emailText"
+                                  style="font-family: 'Inter', sans-serif; font-size: 0.85rem; min-width: 0;"
+                                  title="barreraquezadadanielalejandro@gmail.com">
+                                barreraquezadadanielalejandro@gmail.com
+                            </span>
+                            <button class="btn btn-sm btn-light border flex-shrink-0" onclick="copyEmail()" title="Copiar correo">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                        <a href="mailto:barreraquezadadanielalejandro@gmail.com?subject=Soporte%20ExpedienteECO"
+                           class="btn btn-escuela-blue w-100 mt-2 shadow-sm py-2">
+                            <i class="bi bi-envelope-paper me-2"></i>Redactar Correo
+                        </a>
+                    </div>
+
+                    <div class="d-grid">
+                        <a href="https://wa.me/50378714028" target="_blank" class="btn btn-outline-success d-flex align-items-center justify-content-between p-3 rounded-3 transition-all hover-light">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-whatsapp fs-4 me-3"></i>
+                                <div class="text-start">
+                                    <div class="fw-bold small mb-0">WhatsApp TI</div>
+                                    <div class="text-muted text-xs">Respuesta Inmediata</div>
+                                </div>
+                            </div>
+                            <i class="bi bi-chevron-right small opacity-50"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header border-0 bg-white pt-4 px-4">
+                    <h6 class="fw-bold d-flex align-items-center mb-0 text-escuela-blue">
+                        <span class="p-2 bg-light rounded me-2">
+                            <i class="bi bi-grid-3x3-gap text-primary"></i>
+                        </span>
+                        Ecosistema Digital Oasis
+                    </h6>
+                </div>
+                <div class="card-body px-4 pb-4">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <a href="https://oasissa.adminwebschool.com/login.php" target="_blank" class="text-decoration-none">
+                                <div class="p-4 border rounded-3 text-center hover-card h-100 d-flex flex-column justify-content-center">
+                                    <i class="bi bi-mortarboard fs-2 mb-2 text-primary"></i>
+                                    <span class="fw-bold text-dark small">AdminWebSchool</span>
+                                    <small class="text-muted text-xs">Gestión Académica</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="https://pagos-escuela.com" target="_blank" class="text-decoration-none">
+                                <div class="p-4 border rounded-3 text-center hover-card h-100 d-flex flex-column justify-content-center">
+                                    <i class="bi bi-credit-card fs-2 mb-2 text-primary"></i>
+                                    <span class="fw-bold text-dark small">Colecturía Virtual</span>
+                                    <small class="text-muted text-xs">Pagos y Aranceles</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="https://escuelaoasis.edu.sv/" target="_blank" class="text-decoration-none">
+                                <div class="p-4 border rounded-3 text-center hover-card h-100 d-flex flex-column justify-content-center">
+                                    <i class="bi bi-globe2 fs-2 mb-2 text-primary"></i>
+                                    <span class="fw-bold text-dark small">Sitio Web Oficial</span>
+                                    <small class="text-muted text-xs">Noticias Oasis</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, var(--color-institucional) 0%, #001a33 100%); color: white; border-radius: 12px;">
+                <div class="card-body p-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-10 p-3 rounded-3 me-3">
+                            <i class="bi bi-file-earmark-pdf fs-2"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Guía de Usuario ExpedienteECO</h6>
+                            <p class="mb-0 opacity-75 text-xs">Consulta manuales de uso y protocolos médicos escolares.</p>
+                        </div>
+                    </div>
+                    <a href="~/docs/Manual_Usuario.pdf" class="btn btn-light fw-bold rounded-pill px-4 shadow-sm py-2 btn-sm">
+                        Descargar PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyEmail() {
+        const email = "barreraquezadadanielalejandro@gmail.com";
+        navigator.clipboard.writeText(email).then(() => {
+            alert("Correo copiado: " + email);
+        });
+    }
+</script>

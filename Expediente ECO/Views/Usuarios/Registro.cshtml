@@ -1,0 +1,57 @@
+﻿@model RegistroViewModel
+
+@{
+    ViewData["Title"] = "Registro de Personal";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card border-0 shadow-lg p-4" style="max-width: 450px; width: 100%; border-radius: 20px;">
+        <div class="card-body">
+            <div class="text-center mb-4">
+                <div class="bg-soft-primary d-inline-block p-3 rounded-circle mb-3">
+                    <i class="bi bi-person-plus text-primary fs-1"></i>
+                </div>
+                <h3 class="fw-bold text-dark">Nuevo Usuario</h3>
+                <p class="text-muted small">Cree una cuenta para el personal de la clínica</p>
+            </div>
+
+            <form asp-action="Registro">
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted">Correo Institucional</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-envelope text-muted"></i></span>
+                        <input asp-for="Email" class="form-control bg-light border-0" placeholder="ejemplo@correo.com" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted">Contraseña de Acceso</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0"><i class="bi bi-lock text-muted"></i></span>
+                        <input asp-for="Password" type="password" class="form-control bg-light border-0" placeholder="Mínimo 8 caracteres" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 btn-lg fw-bold shadow mb-3" style="border-radius: 12px;">
+                    Registrar Usuario
+                </button>
+
+                <div class="text-center">
+                    <a asp-action="Login" class="text-decoration-none small fw-bold text-primary">
+                        <i class="bi bi-arrow-left me-1"></i> Volver al Inicio
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-soft-primary {
+        background-color: #e7f1ff;
+    }
+</style>

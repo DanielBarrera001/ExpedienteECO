@@ -1,0 +1,84 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Acceso al Sistema";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; padding: 2rem 0;">
+    <div class="row shadow-lg border-0" style="border-radius: 20px; overflow: hidden; max-width: 950px; width: 100%; background-color: #ffffff;">
+
+        <div class="col-md-6 d-none d-md-flex flex-column justify-content-center align-items-center p-5 bg-white border-end" style="border-color: #eee !important;">
+
+            <div class="mb-4 d-flex justify-content-center align-items-center" style="min-height: 150px;">
+                <img src="~/img/logo_escuela.png"
+                     alt="Logo Oasis"
+                     style="max-width: 220px; max-height: 150px; width: auto; height: auto; object-fit: contain;"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+                <i class="bi bi-shield-plus" style="display: none; font-size: 6rem; color: var(--color-institucional);"></i>
+            </div>
+
+            <div class="text-center mt-3">
+                <h3 class="fw-bolder" style="color: var(--color-institucional);">Escuela Cristiana Oasis</h3>
+                <p class="text-muted small mx-auto" style="max-width: 300px;">
+                    Portal de Salud Escolar | Santa Ana, El Salvador<br />
+                    Manejo Seguro de Expedientes ECO
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6 p-5 d-flex flex-column justify-content-center" style="background-color: #fcfdfe;">
+
+            <div class="mb-5 text-center text-md-start">
+                <h3 class="fw-bold mb-1" style="color: var(--color-texto);">Bienvenido, Dr/a.</h3>
+                <div style="width: 50px; height: 4px; background-color: var(--color-institucional); border-radius: 2px;"></div>
+                <p class="text-muted small mt-2">Inicie sesión para acceder al panel médico</p>
+            </div>
+
+            @if (ViewData.Keys.Contains("mensaje"))
+            {
+                <div class="alert alert-danger py-2 small d-flex align-items-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <div>@ViewData["mensaje"]</div>
+                </div>
+            }
+
+            <form asp-action="Login" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted">Correo Institucional</label>
+                    <div class="input-group custom-input-group shadow-sm">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                        <input asp-for="Email" class="form-control border-start-0 ps-0" placeholder="usuario@escuela.com" style="height: 50px;" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted">Contraseña</label>
+                    <div class="input-group custom-input-group shadow-sm">
+                        <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+                        <input asp-for="Password" type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" style="height: 50px;" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 btn-lg fw-bold shadow-sm py-3 mb-3"
+                        style="background-color: var(--color-institucional); border: none; border-radius: 12px; font-size: 1rem; transition: background 0.2s;">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Entrar al Sistema
+                </button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p class="small text-muted mb-1">¿Problemas técnicos?</p>
+                <a href="mailto:barreraquezadadanielalejandro@gmail.com?subject=Soporte%20ExpedienteECO"
+                   class="small text-decoration-none fw-bold"
+                   style="color: var(--color-institucional);"
+                   title="Enviar correo a soporte">
+                    <i class="bi bi-envelope-at me-1"></i> soporte@escuela.com
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
