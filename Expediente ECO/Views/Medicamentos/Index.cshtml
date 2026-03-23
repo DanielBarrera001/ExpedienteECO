@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ExpedienteECO.Entidades.Medicamento>
+@using ExpedienteECO.Servicios
 
 @{
     ViewData["Title"] = "Inventario de Medicamentos";
@@ -6,7 +7,7 @@
 
 <div class="dashboard-container py-4 container-fluid">
 
-    @* ENCABEZADO NORMALIZADO (Estilo Alumnos) *@
+    @* ENCABEZADO CON SEGURIDAD *@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="fw-bold m-0 text-primary" style="color: var(--color-primario) !important;">
@@ -21,12 +22,17 @@
                 </ol>
             </nav>
         </div>
-        <a asp-action="Create" class="btn btn-escuela-blue shadow-sm rounded-pill px-4 fw-bold">
-            <i class="bi bi-plus-circle-fill me-1"></i> Nuevo Insumo
-        </a>
+
+        @* Solo el Admin puede ver el botón de Nuevo Insumo *@
+        @if (User.IsInRole(Constantes.RolAdmin))
+        {
+            <a asp-action="Create" class="btn btn-escuela-blue shadow-sm rounded-pill px-4 fw-bold">
+                <i class="bi bi-plus-circle-fill me-1"></i> Nuevo Insumo
+            </a>
+        }
     </div>
 
-    @* SECCIÓN DE FILTROS USANDO LA PARCIAL *@
+    @* SECCIÓN DE FILTROS *@
     <div class="row mb-4">
         <partial name="_BuscadorPill" view-data='@new ViewDataDictionary(ViewData) {
                                                   { "IdBuscador", "busquedaIndex" },
@@ -55,7 +61,7 @@
                             <tr>
                                 <td class="ps-4">
                                     <div class="d-flex align-items-center">
-                                        <div class="avatar-sm bg-soft-primario rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
+                                        <div class="avatar-sm bg-soft-primario rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px; background-color: #eef2ff;">
                                             <i class="bi bi-box-seam text-primary"></i>
                                         </div>
                                         <div>
@@ -73,28 +79,40 @@
                                 <td>
                                     @if (item.StockActual <= 0)
                                     {
-                                        <span class="badge bg-soft-danger text-danger border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase">Agotado</span>
+                                        <span class="badge bg-soft-danger text-danger border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase" style="background-color: #fee2e2;">Agotado</span>
                                     }
                                     else if (item.StockActual <= item.StockMinimo)
                                     {
-                                        <span class="badge bg-soft-warning text-warning-dark border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase">Stock Bajo</span>
+                                        <span class="badge bg-soft-warning text-warning border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase" style="background-color: #fef3c7; color: #92400e !important;">Stock Bajo</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-soft-success text-success border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase">Disponible</span>
+                                        <span class="badge bg-soft-success text-success border-0 rounded-pill px-3 py-2 fw-bold text-xs text-uppercase" style="background-color: #dcfce7;">Disponible</span>
                                     }
                                 </td>
                                 <td class="text-center pe-4">
                                     <div class="btn-group rounded-3 shadow-xs">
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white border btn-sm py-2 px-3" title="Editar">
-                                            <i class="bi bi-pencil-square text-primary"></i>
-                                        </a>
+
+                                        @* BOTÓN EDITAR: Solo Admin *@
+                                        @if (User.IsInRole(Constantes.RolAdmin))
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white border btn-sm py-2 px-3" title="Editar">
+                                                <i class="bi bi-pencil-square text-primary"></i>
+                                            </a>
+                                        }
+
+                                        @* BOTÓN DETALLES: Visible para todos *@
                                         <button type="button" class="btn btn-white border btn-sm py-2 px-3" onclick="verDetalles(@item.Id)" title="Detalles">
                                             <i class="bi bi-eye text-info"></i>
                                         </button>
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-white border btn-sm py-2 px-3" title="Eliminar">
-                                            <i class="bi bi-trash3 text-danger"></i>
-                                        </a>
+
+                                        @* BOTÓN ELIMINAR: Solo Admin *@
+                                        @if (User.IsInRole(Constantes.RolAdmin))
+                                        {
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-white border btn-sm py-2 px-3" title="Eliminar">
+                                                <i class="bi bi-trash3 text-danger"></i>
+                                            </a>
+                                        }
                                     </div>
                                 </td>
                             </tr>
@@ -102,54 +120,64 @@
                     </tbody>
                 </table>
             </div>
-            @* Espaciador para estética de paginación *@
             <div class="p-3"></div>
         </div>
     </div>
 </div>
 
-@* MODAL PARA DETALLES (AJAX) *@
+@* MODAL PARA DETALLES *@
 <div class="modal fade" id="modalDetalles" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4" id="contenidoModal">
-            @* Contenido cargado dinámicamente *@
+            @* AJAX carga aquí _DetailsModal *@
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @* Librerías DataTables *@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Inicialización de DataTable
             var table = $('#tablaMedicamentos').DataTable({
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
                 },
                 "responsive": true,
                 "dom": 'rtip',
-                "pageLength": 50,
-                "order": [[0, "asc"]], // Ordenar por nombre por defecto
+                "pageLength": 25,
+                "order": [[0, "asc"]],
                 "columnDefs": [
-                    { "orderable": false, "targets": 4 } // Desactivar orden en columna de acciones
+                    { "orderable": false, "targets": 4 }
                 ]
             });
 
-            // Conexión del buscador parcial con la tabla
             $('#busquedaIndex').on('keyup', function () {
                 table.search(this.value).draw();
             });
         });
 
-        // Función para cargar el Modal de detalles
         function verDetalles(id) {
-            $("#contenidoModal").html('<div class="p-5 text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">Cargando información...</p></div>');
+            $("#contenidoModal").html('<div class="p-5 text-center"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">Cargando...</p></div>');
             $("#modalDetalles").modal("show");
             $("#contenidoModal").load("/Medicamentos/DetailsModal/" + id);
         }
     </script>
 }
+
+<style>
+    .btn-white {
+        background: white;
+        transition: all 0.2s;
+    }
+
+        .btn-white:hover {
+            background: #f8f9fa;
+        }
+
+    .shadow-xs {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+</style>

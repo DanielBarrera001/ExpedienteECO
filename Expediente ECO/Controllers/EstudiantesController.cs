@@ -1,11 +1,14 @@
 ﻿using ExpedienteECO.Entidades;
 using ExpedienteECO.Models;
+using ExpedienteECO.Servicios; // Asegúrate de tener este namespace para Constantes.RolAdmin
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpedienteECO.Controllers
 {
+    [Authorize]
     public class EstudiantesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,13 +28,7 @@ namespace ExpedienteECO.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        // --- MÉTODOS DE BÚSQUEDA E INDEX ---
-        public async Task<IActionResult> BuscarParaConsulta(string term)
-        {
-            if (string.IsNullOrEmpty(term)) return PartialView("_ResultadosBusqueda", new List<Estudiante>());
-            var resultados = await _context.Estudiantes.Where(e => e.NombreCompleto.Contains(term)).Take(5).ToListAsync();
-            return PartialView("_ResultadosBusqueda", resultados);
-        }
+        // --- MÉTODOS DE ACCESO GENERAL (Admin y Doctor) ---
 
         public async Task<IActionResult> Index(string buscar, string sortOrder)
         {
@@ -58,19 +55,15 @@ namespace ExpedienteECO.Controllers
                 PadecimientosCronicos = s.PadecimientosCronicos
             });
 
-            // --- LÓGICA DE ORDENAMIENTO POR JERARQUÍA ---
             if (sortOrder == "Grado" || sortOrder == "grado_desc")
             {
-                // Asignamos un peso numérico a cada string para ordenar correctamente
                 var listaConPeso = listaQuery.AsEnumerable().OrderBy(s => GetGradoPeso(s.Grado));
-
                 if (sortOrder == "grado_desc")
                     return View(listaConPeso.OrderByDescending(s => GetGradoPeso(s.Grado)).ToList());
 
                 return View(listaConPeso.ToList());
             }
 
-            // Ordenamiento normal para Nombre y Consultas
             listaQuery = sortOrder switch
             {
                 "nombre_desc" => listaQuery.OrderByDescending(s => s.NombreCompleto),
@@ -82,45 +75,35 @@ namespace ExpedienteECO.Controllers
             return View(await listaQuery.ToListAsync());
         }
 
-        // Método auxiliar para definir el orden real de los grados
-        private int GetGradoPeso(string grado)
+        public async Task<IActionResult> Details(int? id)
         {
-            return grado switch
-            {
-                "Inicial 3" => 1,
-                "Parvularia 4" => 2,
-                "Parvularia 5" => 3,
-                "Parvularia 6" => 4,
-                "Primero" => 5,
-                "Segundo" => 6,
-                "Tercero" => 7,
-                "Cuarto" => 8,
-                "Quinto" => 9,
-                "Sexto" => 10,
-                "Séptimo" => 11,
-                "Octavo" => 12,
-                "Noveno" => 13,
-                "Décimo" => 14,
-                "Onceavo" => 15,
-                _ => 99
-            };
+            if (id == null) return NotFound();
+            var estudiante = await _context.Estudiantes.Include(e => e.Consultas).FirstOrDefaultAsync(m => m.Id == id);
+            return estudiante == null ? NotFound() : View(estudiante);
         }
 
-        // --- CREATE ---
+        public async Task<IActionResult> BuscarParaConsulta(string term)
+        {
+            if (string.IsNullOrEmpty(term)) return PartialView("_ResultadosBusqueda", new List<Estudiante>());
+            var resultados = await _context.Estudiantes.Where(e => e.NombreCompleto.Contains(term)).Take(5).ToListAsync();
+            return PartialView("_ResultadosBusqueda", resultados);
+        }
+
+        // --- MÉTODOS SOLO ADMINISTRADOR ---
+
+        [Authorize(Roles = Constantes.RolAdmin)]
         public IActionResult Create()
         {
-            // CAMBIO: Envolver la lista en un SelectList
             ViewBag.Grados = new SelectList(_gradosEscolares);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Create(Estudiante estudiante, IFormFile? fotoFile)
         {
-            // Forzar Sección A y normalizar padecimientos
             estudiante.Seccion = "A";
-
             if (estudiante.TienePadecimiento && (string.IsNullOrEmpty(estudiante.PadecimientosCronicos) || estudiante.PadecimientosCronicos == "Ninguno"))
                 estudiante.PadecimientosCronicos = "Pendiente de especificar";
             else if (!estudiante.TienePadecimiento)
@@ -129,37 +112,33 @@ namespace ExpedienteECO.Controllers
             if (ModelState.IsValid)
             {
                 if (fotoFile != null && fotoFile.Length > 0)
-                {
                     estudiante.FotoPath = await GuardarArchivo(fotoFile);
-                }
+
                 _context.Add(estudiante);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
             ViewBag.Grados = new SelectList(_gradosEscolares);
             return View(estudiante);
         }
 
-        // --- EDIT ---
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
             var estudiante = await _context.Estudiantes.FindAsync(id);
             if (estudiante == null) return NotFound();
-
             ViewBag.Grados = new SelectList(_gradosEscolares, estudiante.Grado);
             return View(estudiante);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Edit(int id, Estudiante estudiante, IFormFile? fotoFile)
         {
             if (id != estudiante.Id) return NotFound();
-
-            estudiante.Seccion = "A"; // Asegurar normalización
-
+            estudiante.Seccion = "A";
             if (!estudiante.TienePadecimiento) estudiante.PadecimientosCronicos = "Ninguno";
 
             if (ModelState.IsValid)
@@ -168,6 +147,10 @@ namespace ExpedienteECO.Controllers
                 {
                     if (fotoFile != null && fotoFile.Length > 0)
                     {
+                        // Si ya tiene foto, eliminar la anterior
+                        var oldPath = await _context.Estudiantes.Where(e => e.Id == id).Select(e => e.FotoPath).FirstOrDefaultAsync();
+                        if (!string.IsNullOrEmpty(oldPath)) EliminarArchivo(oldPath);
+
                         estudiante.FotoPath = await GuardarArchivo(fotoFile);
                     }
                     _context.Update(estudiante);
@@ -180,19 +163,42 @@ namespace ExpedienteECO.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id = estudiante.Id });
             }
-
             ViewBag.Grados = new SelectList(_gradosEscolares, estudiante.Grado);
             return View(estudiante);
         }
 
-        // --- OTROS MÉTODOS ---
-        public async Task<IActionResult> Details(int? id)
+        // NUEVO MÉTODO PARA EL MODAL DE FOTO
+        [HttpPost]
+        [Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<JsonResult> ActualizarFotoModal(int id, IFormFile fotoFile)
         {
-            if (id == null) return NotFound();
-            var estudiante = await _context.Estudiantes.Include(e => e.Consultas).FirstOrDefaultAsync(m => m.Id == id);
-            return estudiante == null ? NotFound() : View(estudiante);
+            try
+            {
+                if (fotoFile == null || fotoFile.Length == 0)
+                    return Json(new { success = false, message = "No se seleccionó ninguna imagen." });
+
+                var estudiante = await _context.Estudiantes.FindAsync(id);
+                if (estudiante == null)
+                    return Json(new { success = false, message = "Estudiante no encontrado." });
+
+                // Eliminar foto antigua si existe
+                if (!string.IsNullOrEmpty(estudiante.FotoPath))
+                    EliminarArchivo(estudiante.FotoPath);
+
+                // Guardar nueva foto
+                estudiante.FotoPath = await GuardarArchivo(fotoFile);
+                _context.Update(estudiante);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, newPath = estudiante.FotoPath });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
 
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -202,6 +208,7 @@ namespace ExpedienteECO.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var estudiante = await _context.Estudiantes.FindAsync(id);
@@ -214,20 +221,28 @@ namespace ExpedienteECO.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ActualizarFotoModal(int id, IFormFile fotoFile)
+        // --- HELPERS ---
+
+        private int GetGradoPeso(string grado) => grado switch
         {
-            if (fotoFile == null || fotoFile.Length == 0) return Json(new { success = false, message = "No image" });
-            var estudiante = await _context.Estudiantes.FindAsync(id);
-            if (estudiante == null) return Json(new { success = false, message = "Not found" });
+            "Inicial 3" => 1,
+            "Parvularia 4" => 2,
+            "Parvularia 5" => 3,
+            "Parvularia 6" => 4,
+            "Primero" => 5,
+            "Segundo" => 6,
+            "Tercero" => 7,
+            "Cuarto" => 8,
+            "Quinto" => 9,
+            "Sexto" => 10,
+            "Séptimo" => 11,
+            "Octavo" => 12,
+            "Noveno" => 13,
+            "Décimo" => 14,
+            "Onceavo" => 15,
+            _ => 99
+        };
 
-            estudiante.FotoPath = await GuardarArchivo(fotoFile);
-            _context.Update(estudiante);
-            await _context.SaveChangesAsync();
-            return Json(new { success = true, newPath = estudiante.FotoPath });
-        }
-
-        // Helpers para no repetir código de archivos
         private async Task<string> GuardarArchivo(IFormFile file)
         {
             string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
@@ -240,6 +255,7 @@ namespace ExpedienteECO.Controllers
 
         private void EliminarArchivo(string path)
         {
+            if (string.IsNullOrEmpty(path)) return;
             string fullPath = Path.Combine(_hostEnvironment.WebRootPath, path.TrimStart('/'));
             if (System.IO.File.Exists(fullPath)) System.IO.File.Delete(fullPath);
         }

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ExpedienteECO.Models.EstudianteViewModel>
+@using ExpedienteECO.Servicios
 
 <div class="dashboard-container py-4 container-fluid">
     @* ENCABEZADO *@
@@ -12,18 +13,23 @@
                 </ol>
             </nav>
         </div>
-        <a asp-action="Create" class="btn btn-escuela-blue shadow-sm rounded-pill px-4 fw-bold">
-            <i class="bi bi-person-plus-fill me-1"></i> Nuevo Ingreso
-        </a>
+
+        @* SEGURIDAD: Solo Admin *@
+        @if (User.IsInRole(Constantes.RolAdmin))
+        {
+            <a asp-action="Create" class="btn btn-escuela-blue shadow-sm rounded-pill px-4 fw-bold">
+                <i class="bi bi-person-plus-fill me-1"></i> Nuevo Ingreso
+            </a>
+        }
     </div>
 
     @* BUSCADOR (ESTILO PÍLDORA) *@
     <div class="row mb-4">
         <partial name="_BuscadorPill" view-data='@new ViewDataDictionary(ViewData) {
-                                                  { "IdBuscador", "buscarEstudiante" },
-                                                  { "Placeholder", "Buscar por nombre, grado o padecimiento..." },
-                                                  { "ClaseCol", "col-md-5" }
-                                              }' />
+                                                                                        { "IdBuscador", "buscarEstudiante" },
+                                                                                        { "Placeholder", "Buscar por nombre, grado o padecimiento..." },
+                                                                                        { "ClaseCol", "col-md-5" }
+                                                                                    }' />
     </div>
 
     @* TABLA DE ESTUDIANTES *@
@@ -83,17 +89,23 @@
                             </td>
                             <td class="text-end pe-4">
                                 <div class="btn-group bg-white shadow-xs rounded-pill border p-1">
+                                    @* Visible para todos *@
                                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Ver Expediente">
                                         <i class="bi bi-eye-fill text-info"></i>
                                     </a>
-                                    <button type="button" class="btn btn-white btn-sm border-0 rounded-circle"
-                                            onclick="openFotoModal('@item.Id', '@item.NombreCompleto', '@(item.FotoPath ?? "/img/default-user.png")')"
-                                            title="Actualizar Fotografía">
-                                        <i class="bi bi-camera-fill text-success"></i>
-                                    </button>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Editar Datos">
-                                        <i class="bi bi-pencil-square text-primary"></i>
-                                    </a>
+
+                                    @* SEGURIDAD: Solo Admin *@
+                                    @if (User.IsInRole(Constantes.RolAdmin))
+                                    {
+                                        <button type="button" class="btn btn-white btn-sm border-0 rounded-circle"
+                                                onclick="openFotoModal('@item.Id', '@item.NombreCompleto', '@(item.FotoPath ?? "/img/default-user.png")')"
+                                                title="Actualizar Fotografía">
+                                            <i class="bi bi-camera-fill text-success"></i>
+                                        </button>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-white btn-sm border-0 rounded-circle" title="Editar Datos">
+                                            <i class="bi bi-pencil-square text-primary"></i>
+                                        </a>
+                                    }
                                 </div>
                             </td>
                         </tr>
@@ -105,49 +117,50 @@
     </div>
 </div>
 
-@* MODAL DE FOTO (Igual al anterior) *@
-<div class="modal fade" id="fotoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-            <div class="modal-header border-0 bg-soft-primario p-4">
-                <h5 class="fw-bold m-0 text-primary">Actualizar Fotografía</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="formActualizarFoto">
-                <div class="modal-body text-center p-4">
-                    <input type="hidden" name="id" id="modalEstudianteId" />
-                    <p class="text-muted mb-4">Estudiante: <span id="modalNombreTexto" class="fw-bold text-dark"></span></p>
-                    <div class="mb-4 position-relative d-inline-block">
-                        <img id="modalPreview" src="" class="rounded-circle shadow border border-4 border-white" style="width: 160px; height: 160px; object-fit: cover;">
-                        <div class="position-absolute bottom-0 end-0 bg-success text-white rounded-circle p-2 shadow-sm">
-                            <i class="bi bi-camera-fill"></i>
+@* MODAL DE FOTO (Solo se renderiza si es Admin para mayor seguridad) *@
+@if (User.IsInRole(Constantes.RolAdmin))
+{
+    <div class="modal fade" id="fotoModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header border-0 bg-soft-primario p-4">
+                    <h5 class="fw-bold m-0 text-primary">Actualizar Fotografía</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formActualizarFoto">
+                    <div class="modal-body text-center p-4">
+                        <input type="hidden" name="id" id="modalEstudianteId" />
+                        <p class="text-muted mb-4">Estudiante: <span id="modalNombreTexto" class="fw-bold text-dark"></span></p>
+                        <div class="mb-4 position-relative d-inline-block">
+                            <img id="modalPreview" src="" class="rounded-circle shadow border border-4 border-white" style="width: 160px; height: 160px; object-fit: cover;">
+                            <div class="position-absolute bottom-0 end-0 bg-success text-white rounded-circle p-2 shadow-sm">
+                                <i class="bi bi-camera-fill"></i>
+                            </div>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label class="form-label small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Seleccionar archivo</label>
+                            <input type="file" name="fotoFile" class="form-control rounded-pill" id="modalInputFile" accept="image/*" onchange="previewModalImage(this)" required>
                         </div>
                     </div>
-                    <div class="mb-3 text-start">
-                        <label class="form-label small fw-bold text-uppercase text-muted" style="font-size: 0.7rem;">Seleccionar archivo</label>
-                        <input type="file" name="fotoFile" class="form-control rounded-pill" id="modalInputFile" accept="image/*" onchange="previewModalImage(this)" required>
+                    <div class="modal-footer border-0 pt-0 justify-content-center pb-4">
+                        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" id="btnGuardarFoto" onclick="subirFotoAjax()" class="btn btn-escuela-blue shadow rounded-pill px-4">
+                            <i class="bi bi-cloud-arrow-up me-1"></i> Actualizar Foto
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer border-0 pt-0 justify-content-center pb-4">
-                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" id="btnGuardarFoto" onclick="subirFotoAjax()" class="btn btn-escuela-blue shadow rounded-pill px-4">
-                        <i class="bi bi-cloud-arrow-up me-1"></i> Actualizar Foto
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+}
 
 @section Scripts {
-    @* Librerías DataTables *@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Inicialización de DataTable igual que Medicamentos
             var table = $('#tablaEstudiantes').DataTable({
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json"
@@ -156,53 +169,54 @@
                 "ordering": false,
                 "dom": 'rtip',
                 "pageLength": 50,
-                "order": [[0, "asc"]],
-                "columnDefs": [
-                    { "orderable": false, "targets": 4 } 
-                ]
+                "order": [[0, "asc"]]
             });
 
-            // Conectar el buscador pill
             $('#buscarEstudiante').on('keyup', function () {
                 table.search(this.value).draw();
             });
         });
 
-        // Funciones del Modal (Misma lógica AJAX)
-        function openFotoModal(id, nombre, fotoActual) {
-            document.getElementById('modalEstudianteId').value = id;
-            document.getElementById('modalNombreTexto').innerText = nombre;
-            document.getElementById('modalPreview').src = fotoActual;
-            document.getElementById('modalInputFile').value = "";
-            var myModal = new bootstrap.Modal(document.getElementById('fotoModal'));
-            myModal.show();
-        }
+        // Solo definir funciones de modal si el usuario es Admin
+        @if (User.IsInRole(Constantes.RolAdmin))
+        {
+                <text>
+                function openFotoModal(id, nombre, fotoActual) {
+                    document.getElementById('modalEstudianteId').value = id;
+                    document.getElementById('modalNombreTexto').innerText = nombre;
+                    document.getElementById('modalPreview').src = fotoActual;
+                    document.getElementById('modalInputFile').value = "";
+                    var myModal = new bootstrap.Modal(document.getElementById('fotoModal'));
+                    myModal.show();
+                }
 
-        function previewModalImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) { document.getElementById('modalPreview').src = e.target.result; }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+                function previewModalImage(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) { document.getElementById('modalPreview').src = e.target.result; }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
 
-        function subirFotoAjax() {
-            const btn = document.getElementById("btnGuardarFoto");
-            const formData = new FormData(document.getElementById("formActualizarFoto"));
-            if (!document.getElementById('modalInputFile').value) { alert("Seleccione un archivo."); return; }
-            btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Subiendo...';
+                function subirFotoAjax() {
+                    const btn = document.getElementById("btnGuardarFoto");
+                    const formData = new FormData(document.getElementById("formActualizarFoto"));
+                    if (!document.getElementById('modalInputFile').value) { alert("Seleccione un archivo."); return; }
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Subiendo...';
 
-            fetch('/Estudiantes/ActualizarFotoModal', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) { location.reload(); }
-                else { alert("Error: " + data.message); btn.disabled = false; btn.innerHTML = 'Actualizar Foto'; }
-            })
-            .catch(error => { console.error('Error:', error); btn.disabled = false; });
+                    fetch('/Estudiantes/ActualizarFotoModal', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) { location.reload(); }
+                        else { alert("Error: " + data.message); btn.disabled = false; btn.innerHTML = 'Actualizar Foto'; }
+                    })
+                    .catch(error => { console.error('Error:', error); btn.disabled = false; });
+                }
+                </text>
         }
     </script>
 }

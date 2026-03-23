@@ -581,3 +581,55 @@ body {
         border: none !important;
         font-size: 1.1rem;
     }
+
+<style >
+.bg-soft-primary {
+    background-color: #eef2ff;
+    color: #4f46e5;
+}
+
+/* Estilo para el botón de eliminar sutil */
+.btn-danger-soft {
+    background-color: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #ffe4e6;
+}
+
+    .btn-danger-soft:hover:not([disabled]) {
+        background-color: #e11d48;
+        color: white;
+    }
+
+    .btn-danger-soft[disabled] {
+        background-color: #fafafa;
+        color: #ccc;
+        border: 1px solid #f0f0f0;
+        cursor: not-allowed;
+    }
+
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.btn-white {
+    background: white;
+    border: 1px solid #f0f0f0;
+    color: #666;
+}
+
+    .btn-white:hover:not([disabled]) {
+        background: #f8f9fa;
+        color: #333;
+    }
+
+    .btn-white[disabled] {
+        background: #fafafa;
+        opacity: 0.6;
+    }
+
+</style >

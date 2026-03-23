@@ -66,20 +66,31 @@
                                     <span class="text-muted small">Permisos de Sistema</span>
                                 </td>
                                 <td class="text-end">
-                                    <div class="btn-group shadow-sm rounded-3">
-                                        <form method="post" asp-action="HacerAdmin" class="d-inline">
-                                            <input type="hidden" name="email" value="@usuario.Email" />
-                                            <button class="btn btn-white btn-sm border-end" type="submit"
-                                                    title="Asignar permisos de administrador" @(esUsuarioActual ? "disabled" : "")>
-                                                <i class="bi bi-shield-lock text-success me-1"></i> <small>Hacer Admin</small>
-                                            </button>
-                                        </form>
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <div class="btn-group shadow-sm rounded-3">
+                                            <form method="post" asp-action="HacerAdmin" class="d-inline">
+                                                <input type="hidden" name="email" value="@usuario.Email" />
+                                                <button class="btn btn-white btn-sm border-end" type="submit"
+                                                        title="Asignar permisos de administrador" @(esUsuarioActual ? "disabled" : "")>
+                                                    <i class="bi bi-shield-lock text-success me-1"></i> <small>Hacer Admin</small>
+                                                </button>
+                                            </form>
 
-                                        <form method="post" asp-action="RemoverAdmin" class="d-inline">
+                                            <form method="post" asp-action="RemoverAdmin" class="d-inline">
+                                                <input type="hidden" name="email" value="@usuario.Email" />
+                                                <button class="btn btn-white btn-sm" type="submit"
+                                                        title="Remover permisos" @(esUsuarioActual ? "disabled" : "")>
+                                                    <i class="bi bi-shield-slash text-danger me-1"></i> <small>Quitar Admin</small>
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <form method="post" asp-action="EliminarUsuario" class="d-inline"
+                                              onsubmit="return confirm('¿Estás seguro de eliminar permanentemente a @usuario.Email?')">
                                             <input type="hidden" name="email" value="@usuario.Email" />
-                                            <button class="btn btn-white btn-sm" type="submit"
-                                                    title="Remover permisos" @(esUsuarioActual ? "disabled" : "")>
-                                                <i class="bi bi-shield-slash text-danger me-1"></i> <small>Quitar Admin</small>
+                                            <button class="btn btn-danger-soft btn-sm rounded-3 shadow-sm" type="submit"
+                                                    title="Eliminar cuenta de usuario" @(esUsuarioActual ? "disabled" : "")>
+                                                <i class="bi bi-trash3"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -100,34 +111,3 @@
     </div>
 </div>
 
-<style>
-    .bg-soft-primary {
-        background-color: #eef2ff;
-        color: #4f46e5;
-    }
-
-    .avatar-sm {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-    }
-
-    .btn-white {
-        background: white;
-        border: 1px solid #f0f0f0;
-        color: #666;
-    }
-
-        .btn-white:hover:not([disabled]) {
-            background: #f8f9fa;
-            color: #333;
-        }
-
-        .btn-white[disabled] {
-            background: #fafafa;
-            opacity: 0.6;
-        }
-</style>

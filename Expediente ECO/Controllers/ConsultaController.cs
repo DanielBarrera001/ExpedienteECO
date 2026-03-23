@@ -1,10 +1,13 @@
 ﻿using ExpedienteECO.Entidades;
 using ExpedienteECO.Models;
+using ExpedienteECO.Servicios; // Importante para Constantes.RolAdmin
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpedienteECO.Controllers
 {
+    [Authorize] // Todo el controlador requiere estar logueado
     public class ConsultasController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -42,7 +45,6 @@ namespace ExpedienteECO.Controllers
         }
 
         // --- CREAR CONSULTA (GET) ---
-        [HttpGet]
         public async Task<IActionResult> Create(int estudianteId)
         {
             var estudiante = await _context.Estudiantes
@@ -61,9 +63,7 @@ namespace ExpedienteECO.Controllers
                 UsuarioId = User.Identity?.Name ?? "Usuario_Clinica"
             };
 
-            // Cargamos medicamentos disponibles para el dropdown
             await RellenarMedicamentos(model);
-
             return View(model);
         }
 
@@ -77,7 +77,6 @@ namespace ExpedienteECO.Controllers
                 using var transaction = await _context.Database.BeginTransactionAsync();
                 try
                 {
-                    // 1. Mapeo y creación de la Consulta
                     var consulta = new Consulta
                     {
                         EstudianteId = model.EstudianteId,
@@ -93,11 +92,9 @@ namespace ExpedienteECO.Controllers
                     _context.Consultas.Add(consulta);
                     await _context.SaveChangesAsync();
 
-                    // 2. Lógica de Descuento de Stock y Detalle de Tratamiento
                     if (model.MedicamentoId.HasValue && model.CantidadUsada > 0)
                     {
                         var med = await _context.Medicamentos.FindAsync(model.MedicamentoId);
-
                         if (med != null)
                         {
                             if (med.StockActual < model.CantidadUsada)
@@ -108,11 +105,9 @@ namespace ExpedienteECO.Controllers
                                 return View(model);
                             }
 
-                            // Descontamos del inventario global
                             med.StockActual -= model.CantidadUsada;
                             _context.Update(med);
 
-                            // Registramos el detalle histórico
                             var detalle = new DetalleTratamiento
                             {
                                 ConsultaId = consulta.Id,
@@ -135,22 +130,13 @@ namespace ExpedienteECO.Controllers
                 }
             }
 
-            // Si falla la validación, recargamos el modelo
             await RellenarDatosEstudiante(model);
             await RellenarMedicamentos(model);
             return View(model);
         }
 
-        // --- ELIMINAR CONSULTA ---
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null) return NotFound();
-            var consulta = await _context.Consultas.Include(c => c.Estudiante).FirstOrDefaultAsync(m => m.Id == id);
-            if (consulta == null) return NotFound();
-            return View(consulta);
-        }
-
-        // GET: Consultas/Edit/5
+        // --- EDITAR CONSULTA (SOLO ADMIN) ---
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -181,9 +167,9 @@ namespace ExpedienteECO.Controllers
             return View(model);
         }
 
-        // POST: Consultas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> Edit(int id, ConsultaViewModel model)
         {
             if (id != model.Id) return NotFound();
@@ -210,13 +196,23 @@ namespace ExpedienteECO.Controllers
                     ModelState.AddModelError("", "Error al actualizar: " + ex.Message);
                 }
             }
-            // Si algo falla, rellenamos los datos del estudiante para la vista
             await RellenarDatosEstudiante(model);
             return View(model);
         }
 
+        // --- ELIMINAR CONSULTA (SOLO ADMIN) ---
+        [Authorize(Roles = Constantes.RolAdmin)]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            var consulta = await _context.Consultas.Include(c => c.Estudiante).FirstOrDefaultAsync(m => m.Id == id);
+            if (consulta == null) return NotFound();
+            return View(consulta);
+        }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constantes.RolAdmin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var consulta = await _context.Consultas.FindAsync(id);
@@ -229,7 +225,6 @@ namespace ExpedienteECO.Controllers
         }
 
         // --- MÉTODOS AUXILIARES ---
-
         private async Task RellenarMedicamentos(ConsultaViewModel model)
         {
             model.MedicamentosDisponibles = await _context.Medicamentos

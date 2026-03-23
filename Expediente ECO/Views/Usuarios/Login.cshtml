@@ -62,6 +62,20 @@
                         <input asp-for="Password" type="password" class="form-control border-start-0 ps-0" placeholder="••••••••" style="height: 50px;" />
                     </div>
                     <span asp-validation-for="Password" class="text-danger small"></span>
+
+                    <a asp-action="OlvidePassword" class="small text-decoration-none fw-bold"
+                       style="color: var(--color-institucional); font-size: 0.75rem;">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+                
+                <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <div class="form-check custom-checkbox">
+                        <input asp-for="Recuerdame" class="form-check-input" style="cursor: pointer;">
+                        <label asp-for="Recuerdame" class="form-check-label small text-muted" style="cursor: pointer;">
+                            Mantener sesión iniciada
+                        </label>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 btn-lg fw-bold shadow-sm py-3 mb-3"
@@ -79,6 +93,7 @@
                     <i class="bi bi-envelope-at me-1"></i> soporte@escuela.com
                 </a>
             </div>
+
         </div>
     </div>
 </div>

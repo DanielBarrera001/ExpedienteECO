@@ -234,3 +234,4 @@ C:\Users\Daniel\source\repos\Expediente ECO\Expediente ECO\bin\Debug\net8.0\runt
 C:\Users\Daniel\source\repos\Expediente ECO\Expediente ECO\bin\Debug\net8.0\runtimes\win-arm64\native\libSkiaSharp.dll
 C:\Users\Daniel\source\repos\Expediente ECO\Expediente ECO\bin\Debug\net8.0\runtimes\win-x64\native\libSkiaSharp.dll
 C:\Users\Daniel\source\repos\Expediente ECO\Expediente ECO\bin\Debug\net8.0\runtimes\win-x86\native\libSkiaSharp.dll
+C:\Users\Daniel\source\repos\Expediente ECO\Expediente ECO\obj\Debug\net8.0\swae.build.ex.cache

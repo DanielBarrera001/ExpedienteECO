@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ExpedienteECO.Servicios
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -60,12 +61,22 @@
                                 <i class="bi bi-chat-dots me-1"></i> Comunicaciones
                             </a>
                         </li>
+
+                        @* Pestaña visible solo para Administradores *@
+                        @if (User.Identity.IsAuthenticated && User.IsInRole(Constantes.RolAdmin))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-primary fw-bold" asp-controller="Usuarios" asp-action="Listado">
+                                    <i class="bi bi-shield-lock me-1"></i> Admin Usuarios
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     <div class="d-flex align-items-center gap-2">
                         <div class="d-none d-sm-flex align-items-center me-2">
                             <span class="badge bg-soft-primary text-primary rounded-pill px-3 py-2">
-                                <i class="bi bi-person-circle me-1"></i> @(User.Identity?.Name ?? "Admin")
+                                <i class="bi bi-person-circle me-1"></i> @(User.Identity?.Name ?? "Usuario")
                             </span>
                         </div>
 
@@ -96,6 +107,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

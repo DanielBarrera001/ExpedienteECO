@@ -1,0 +1,275 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\usuarios\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\usuarios\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\models\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\models\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\usuarios\\passwordcambiado.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\usuarios\\passwordcambiado.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\usuarios\\recuperarpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\usuarios\\recuperarpassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\usuarios\\confirmacionenvioemail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\usuarios\\confirmacionenvioemail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\usuarios\\olvidepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\usuarios\\olvidepassword.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\servicios\\servicioemail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\servicios\\servicioemail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\models\\recuperarpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\models\\recuperarpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\servicios\\serviciousuarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\servicios\\serviciousuarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\views\\consultas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\views\\consultas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|c:\\users\\daniel\\source\\repos\\expediente eco\\expediente eco\\controllers\\consultacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE148FAE-91F4-45FD-92E3-C3916C411064}|Expediente ECO\\Expediente ECO.csproj|solutionrelative:expediente eco\\controllers\\consultacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\Login.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Usuarios\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\Login.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Usuarios\\Login.cshtml",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAAEYAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-23T02:32:43.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "Expediente ECO\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAQwEsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T02:18:36.486Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Program.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Program.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Program.cs",
+              "RelativeToolTip": "Expediente ECO\\Program.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T02:15:57.805Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UsuarioViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Models\\UsuarioViewModel.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Models\\UsuarioViewModel.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Models\\UsuarioViewModel.cs",
+              "RelativeToolTip": "Expediente ECO\\Models\\UsuarioViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T02:49:38.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PasswordCambiado.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\PasswordCambiado.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Usuarios\\PasswordCambiado.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\PasswordCambiado.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Usuarios\\PasswordCambiado.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-23T02:47:07.801Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ConfirmacionEnvioEmail.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\ConfirmacionEnvioEmail.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Usuarios\\ConfirmacionEnvioEmail.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\ConfirmacionEnvioEmail.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Usuarios\\ConfirmacionEnvioEmail.cshtml",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAIwBoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-23T02:44:15.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RecuperarPassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\RecuperarPassword.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Usuarios\\RecuperarPassword.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\RecuperarPassword.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Usuarios\\RecuperarPassword.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-23T02:28:35.917Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "OlvidePassword.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\OlvidePassword.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Usuarios\\OlvidePassword.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Usuarios\\OlvidePassword.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Usuarios\\OlvidePassword.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-23T02:34:24.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Expediente ECO\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\appsettings.Development.json",
+              "RelativeToolTip": "Expediente ECO\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-23T02:36:50.669Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\appsettings.json",
+              "RelativeDocumentMoniker": "Expediente ECO\\appsettings.json",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\appsettings.json",
+              "RelativeToolTip": "Expediente ECO\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-23T02:25:14.003Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ServicioEmail.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Servicios\\ServicioEmail.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Servicios\\ServicioEmail.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Servicios\\ServicioEmail.cs",
+              "RelativeToolTip": "Expediente ECO\\Servicios\\ServicioEmail.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAowBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T02:14:25.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RecuperarPasswordViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Models\\RecuperarPasswordViewModel.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Models\\RecuperarPasswordViewModel.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Models\\RecuperarPasswordViewModel.cs",
+              "RelativeToolTip": "Expediente ECO\\Models\\RecuperarPasswordViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T02:23:14.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ServicioUsuarios.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Servicios\\ServicioUsuarios.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Servicios\\ServicioUsuarios.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Servicios\\ServicioUsuarios.cs",
+              "RelativeToolTip": "Expediente ECO\\Servicios\\ServicioUsuarios.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-23T02:14:31.586Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Consultas\\Index.cshtml",
+              "RelativeDocumentMoniker": "Expediente ECO\\Views\\Consultas\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Views\\Consultas\\Index.cshtml",
+              "RelativeToolTip": "Expediente ECO\\Views\\Consultas\\Index.cshtml",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAmwHUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-23T02:11:16.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ConsultaController.cs",
+              "DocumentMoniker": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\ConsultaController.cs",
+              "RelativeDocumentMoniker": "Expediente ECO\\Controllers\\ConsultaController.cs",
+              "ToolTip": "C:\\Users\\Daniel\\source\\repos\\Expediente ECO\\Expediente ECO\\Controllers\\ConsultaController.cs",
+              "RelativeToolTip": "Expediente ECO\\Controllers\\ConsultaController.cs",
+              "ViewState": "AgIAANwAAAAAAAAAAAAuwPgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T01:57:34.578Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

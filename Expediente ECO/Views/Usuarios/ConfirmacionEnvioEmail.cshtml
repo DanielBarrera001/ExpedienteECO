@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Correo Enviado";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh; padding: 2rem 0;">
+    <div class="card shadow-lg border-0 p-5 text-center" style="border-radius: 20px; max-width: 550px; width: 100%;">
+
+        <div class="mb-4">
+            @* Icono de éxito en color institucional *@
+            <i class="bi bi-envelope-check-fill" style="font-size: 4rem; color: #198754;"></i>
+        </div>
+
+        <h2 class="fw-bold mb-3" style="color: var(--color-texto);">¡Enlace enviado!</h2>
+
+        <p class="text-muted">
+            Hemos enviado un correo electrónico a tu cuenta institucional con las instrucciones para restablecer tu contraseña.
+        </p>
+
+        <div class="alert alert-info small border-0 shadow-sm" style="background-color: #f0f7ff; color: #055160; border-radius: 12px;">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            Si no lo recibes en un par de minutos, por favor revisa tu carpeta de <strong>Correo no deseado (SPAM)</strong>.
+        </div>
+
+        <hr class="my-4" style="opacity: 0.1;">
+
+        <div class="d-grid gap-2">
+            <a asp-action="Login" class="btn btn-primary btn-lg fw-bold shadow-sm"
+               style="background-color: var(--color-institucional); border: none; border-radius: 12px; font-size: 1rem;">
+                Volver al inicio de sesión
+            </a>
+        </div>
+
+        <p class="mt-4 small text-muted">
+            ¿Sigues teniendo problemas? <br>
+            Contacta a <span style="color: var(--color-institucional); font-weight: bold;">soporte@escuela.com</span>
+        </p>
+    </div>
+</div>
